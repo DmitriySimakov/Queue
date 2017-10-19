@@ -10,7 +10,7 @@
     tools:context="com.dmitry_simakov.queue.MainActivity">
 
     <fragment
-        class="com.dmitry_simakov.queue.ModelsListFragment"
+        class="com.dmitry_simakov.queue.fragments.ModelsListFragment"
         android:id="@+id/list_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

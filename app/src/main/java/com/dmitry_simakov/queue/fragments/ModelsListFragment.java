@@ -1,7 +1,6 @@
-package com.dmitry_simakov.queue;
+package com.dmitry_simakov.queue.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.view.LayoutInflater;
@@ -10,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.dmitry_simakov.queue.models.MM1;
+import com.dmitry_simakov.queue.models.MMinf;
+
 public class ModelsListFragment extends ListFragment {
     
-    static interface ModelsListListener {
+    public static interface ModelsListListener {
         void itemClicked(int id);
     };
     
@@ -40,5 +42,9 @@ public class ModelsListFragment extends ListFragment {
         if (listener != null) {
             listener.itemClicked((int)id);
         }
+    }
+    
+    public static String getModelName(int id) {
+        return modelsNames[id];
     }
 }

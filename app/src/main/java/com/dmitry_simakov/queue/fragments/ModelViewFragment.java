@@ -1,4 +1,4 @@
-package com.dmitry_simakov.queue;
+package com.dmitry_simakov.queue.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.dmitry_simakov.queue.GraphActivity;
+import com.dmitry_simakov.queue.R;
+import com.dmitry_simakov.queue.models.Model;
 
 public class ModelViewFragment extends Fragment implements View.OnClickListener {
     
@@ -39,7 +43,7 @@ public class ModelViewFragment extends Fragment implements View.OnClickListener 
         
         Log.d("LOG", "ModelViewFragment: onCreateView");
         String className = modelName.replace("/", "");
-        String fullClassName = "com.dmitry_simakov.queue." + className;
+        String fullClassName = "com.dmitry_simakov.queue.models." + className;
         Log.d("LOG", "BEFORE TRY");
         try {
             model = (Model) Class.forName(fullClassName).newInstance();

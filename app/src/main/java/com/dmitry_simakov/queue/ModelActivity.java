@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.dmitry_simakov.queue.fragments.ModelViewFragment;
+
 public class ModelActivity extends AppCompatActivity {
     
     public static final String MODEL_NAME = "MODEL_NAME";

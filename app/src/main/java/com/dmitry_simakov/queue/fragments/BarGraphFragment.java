@@ -1,4 +1,4 @@
-package com.dmitry_simakov.queue;
+package com.dmitry_simakov.queue.fragments;
 
 import android.app.Fragment;
 import android.content.res.Resources;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.dmitry_simakov.queue.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;

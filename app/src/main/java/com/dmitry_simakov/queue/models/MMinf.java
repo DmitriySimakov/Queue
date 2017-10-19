@@ -1,4 +1,6 @@
-package com.dmitry_simakov.queue;
+package com.dmitry_simakov.queue.models;
+
+import com.dmitry_simakov.queue.R;
 
 public class MMinf extends Model {
     

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.dmitry_simakov.queue.fragments.ModelsListFragment;
+
 public class MainActivity extends AppCompatActivity implements ModelsListFragment.ModelsListListener {
     
     @Override
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements ModelsListFragmen
     public void itemClicked(int id) {
         Log.d("LOG", "MainActivity: itemClicked");
         Intent intent = new Intent(this, ModelActivity.class);
-        String modelName = ModelsListFragment.modelsNames[id];
+        String modelName = ModelsListFragment.getModelName(id);
         intent.putExtra(ModelActivity.MODEL_NAME, modelName);
         startActivity(intent);
     }

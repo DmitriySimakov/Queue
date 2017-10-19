@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dmitry_simakov.queue.fragments.BarGraphFragment;
+import com.dmitry_simakov.queue.fragments.ModelViewFragment;
+
 public class GraphActivity extends AppCompatActivity {
     
     @Override
