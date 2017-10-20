@@ -17,10 +17,8 @@ public class MainActivity extends AppCompatActivity implements ModelsListFragmen
         super.onCreate(savedInstanceState);
         Log.d("LOG", "MainActivity: onCreate");
         setContentView(R.layout.activity_main);
-        Log.d("LOG", "setContentView successful");
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
-        Log.d("LOG", "setSupportActionBar successful");
     }
     
     @Override
@@ -34,12 +32,14 @@ public class MainActivity extends AppCompatActivity implements ModelsListFragmen
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("LOG", "MainActivity: onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("LOG", "MainActivity: onOptionItemSelected");
         int id = item.getItemId();
         
         if (id == R.id.action_settings) {

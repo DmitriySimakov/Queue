@@ -1,22 +1,19 @@
 package com.dmitry_simakov.queue.fragments;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.dmitry_simakov.queue.GraphActivity;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.models.Model;
 
-public class ModelViewFragment extends Fragment implements View.OnClickListener {
+public class ModelViewFragment extends Fragment {
     
-    public static final String MODEL_NAME_PREF = "MODEL_NAME";
+    public static final String MODEL_NAME = "MODEL_NAME";
     
     private Model model;
     private String modelName;
@@ -26,28 +23,26 @@ public class ModelViewFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         Log.d("LOG", "ModelViewFragment: onCreate");
         if (savedInstanceState != null) {
-            modelName = savedInstanceState.getString(MODEL_NAME_PREF);
+            modelName = savedInstanceState.getString(MODEL_NAME);
         }
     }
     
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        
-        return inflater.inflate(R.layout.fragment_model_view, container, false);
+        Log.d("LOG", "ModelViewFragment: onCreateView");
+        View rootView = inflater.inflate(R.layout.fragment_model_view, container, false);
+        return rootView;
     }
     
     @Override
     public void onStart() {
         super.onStart();
-        
-        Log.d("LOG", "ModelViewFragment: onCreateView");
+        Log.d("LOG", "ModelViewFragment: onStart");
         String className = modelName.replace("/", "");
         String fullClassName = "com.dmitry_simakov.queue.models." + className;
-        Log.d("LOG", "BEFORE TRY");
         try {
             model = (Model) Class.forName(fullClassName).newInstance();
-            Log.d("LOG", "TRY");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (java.lang.InstantiationException e) {
@@ -64,21 +59,12 @@ public class ModelViewFragment extends Fragment implements View.OnClickListener 
             
             ImageView RDDImageView = view.findViewById(R.id.RDDImageView);
             RDDImageView.setImageResource(model.getRDDImage());
-            
-            Button button = view.findViewById(R.id.startButton);
-            button.setOnClickListener(this);
         }
     }
     
     @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(ModelViewFragment.this.getActivity(), GraphActivity.class);
-        startActivity(intent);
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(MODEL_NAME_PREF, modelName);
+        savedInstanceState.putString(MODEL_NAME, modelName);
     }
     
     public void setModel(String modelName) {

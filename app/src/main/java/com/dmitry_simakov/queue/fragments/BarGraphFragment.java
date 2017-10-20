@@ -1,9 +1,8 @@
 package com.dmitry_simakov.queue.fragments;
 
-import android.app.Fragment;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,19 @@ import java.util.List;
 
 public class BarGraphFragment extends Fragment {
     
+    public static final String MODEL_NAME = "MODEL_NAME";
+    private String modelName;
+    
     private static int NUM_OF_VALUES = 11;
     private BarChart barChart;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            modelName = savedInstanceState.getString(MODEL_NAME);
+        }
+    }
     
     @Override
     public View onCreateView(
@@ -95,5 +105,14 @@ public class BarGraphFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //barChart.animateY(1500);
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(MODEL_NAME, modelName);
+    }
+    
+    public void setModel(String modelName) {
+        this.modelName = modelName;
     }
 }
