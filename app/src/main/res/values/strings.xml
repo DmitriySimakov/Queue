@@ -3,4 +3,16 @@
     <string name="action_settings">Настройки</string>
     <string name="description">Описание</string>
     <string name="calculation">Рассчёт</string>
+    <string name="text_description">Здесь будет текстовое описание модели</string>
+    <string name="model_scheme">Схема модели</string>
+    <string name="BDP_scheme">Birth–death process</string>
+    <string name="lambda">λ</string>
+    <string name="mu">μ</string>
+    <string name="ok">OK</string>
+    <string name="t">t =</string>
+    <string name="k">k =</string>
+    <string name="p">P =</string>
+    <string name="bargraph">Гистограмма</string>
+    <string name="graph">График</string>
+    <string name="table">Таблица</string>
 </resources>

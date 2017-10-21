@@ -8,6 +8,6 @@ public class MM1 extends Model {
     
     public MM1() {
         modelImage = R.drawable.m_m_1__1;
-        RDDImage = R.drawable.m_m_1__2;
+        BDPImage = R.drawable.m_m_1__2;
     }
 }

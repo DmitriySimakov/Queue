@@ -8,6 +8,6 @@ public class MMinf extends Model {
     
     public MMinf() {
         modelImage = R.drawable.m_m_inf__1;
-        RDDImage = R.drawable.m_m_inf__2;
+        BDPImage = R.drawable.m_m_inf__2;
     }
 }

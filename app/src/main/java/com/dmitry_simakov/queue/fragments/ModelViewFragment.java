@@ -57,8 +57,8 @@ public class ModelViewFragment extends Fragment {
             ImageView modelImageView = view.findViewById(R.id.modelImageView);
             modelImageView.setImageResource(model.getModelImage());
             
-            ImageView RDDImageView = view.findViewById(R.id.RDDImageView);
-            RDDImageView.setImageResource(model.getRDDImage());
+            ImageView RDDImageView = view.findViewById(R.id.BDPImageView);
+            RDDImageView.setImageResource(model.getBDPImage());
         }
     }
     
