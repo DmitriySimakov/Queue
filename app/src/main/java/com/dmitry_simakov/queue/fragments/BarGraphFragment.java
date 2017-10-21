@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.dmitry_simakov.queue.R;
@@ -14,7 +15,6 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +51,10 @@ public class BarGraphFragment extends Fragment {
         // TODO
         
         barChart = new BarChart(getActivity());
-        barChart.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        LinearLayout linearLayout = v.findViewById(R.id.linear_layout);
-        linearLayout.addView(barChart);
+        barChart.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        FrameLayout frameLayout = v.findViewById(R.id.frame_layout);
+        frameLayout.addView(barChart);
         
         List<BarEntry> entries = new ArrayList<BarEntry>();
         for (int i = 0; i < NUM_OF_VALUES; i++) {
@@ -63,7 +63,7 @@ public class BarGraphFragment extends Fragment {
         
         BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
         //dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setColor(getResources().getColor(R.color.red)); // Цвет бара
+        dataSet.setColor(getResources().getColor(R.color.red_700)); // Цвет бара
         dataSet.setValueTextColor(Color.BLACK);
         dataSet.setValueTextSize(16f);
         //dataSet.setDrawValues(false);
@@ -78,6 +78,9 @@ public class BarGraphFragment extends Fragment {
         
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+        //barChart.setScaleEnabled(false);
+        //barChart.setDragEnabled(false);
         barChart.setPinchZoom(true);
         barChart.setDrawGridBackground(false);
         barChart.setDrawBarShadow(false);

@@ -44,6 +44,7 @@ public class ModelActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(modelName);
         }
@@ -73,12 +74,13 @@ public class ModelActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "ModelActivity: onOptionsItemSelected");
-        int id = item.getItemId();
-        
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_settings:
+                return true;
         }
-        
         return super.onOptionsItemSelected(item);
     }
     
@@ -113,9 +115,9 @@ public class ModelActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.description);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.calculation);
             }
             return null;
         }
