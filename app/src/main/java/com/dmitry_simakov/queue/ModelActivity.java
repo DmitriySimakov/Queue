@@ -1,7 +1,6 @@
 package com.dmitry_simakov.queue;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,15 +11,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.dmitry_simakov.queue.fragments.BarGraphFragment;
-import com.dmitry_simakov.queue.fragments.ModelViewFragment;
+import com.dmitry_simakov.queue.fragments.ModelCalculationFragment;
+import com.dmitry_simakov.queue.fragments.ModelDescriptionFragment;
 
 public class ModelActivity extends AppCompatActivity {
     
@@ -60,7 +55,7 @@ public class ModelActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         Log.d("LOG", "ModelActivity: setTabLayout successful");
         
-        //ModelViewFragment modelViewFragment = (ModelViewFragment) getFragmentManager().findFragmentById(R.id.model_view_fragment);
+        //ModelDescriptionFragment modelViewFragment = (ModelDescriptionFragment) getFragmentManager().findFragmentById(R.id.model_view_fragment);
         //modelViewFragment.setModel(modelName);
     }
     
@@ -95,13 +90,13 @@ public class ModelActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    ModelViewFragment modelViewFragment = new ModelViewFragment();
-                    modelViewFragment.setModel(modelName);
-                    return modelViewFragment;
+                    ModelDescriptionFragment modelDescriptionFragment = new ModelDescriptionFragment();
+                    modelDescriptionFragment.setModel(modelName);
+                    return modelDescriptionFragment;
                 case 1:
-                    BarGraphFragment barGraphFragment = new BarGraphFragment();
-                    barGraphFragment.setModel(modelName);
-                    return barGraphFragment;
+                    ModelCalculationFragment modelCalculationFragment = new ModelCalculationFragment();
+                    modelCalculationFragment.setModel(modelName);
+                    return modelCalculationFragment;
             }
             return null;
         }

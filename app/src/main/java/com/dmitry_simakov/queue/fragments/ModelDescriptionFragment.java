@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.models.Model;
 
-public class ModelViewFragment extends Fragment {
+public class ModelDescriptionFragment extends Fragment {
     
     public static final String MODEL_NAME = "MODEL_NAME";
     
@@ -21,7 +21,7 @@ public class ModelViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Log.d("LOG", "ModelViewFragment: onCreate");
+        Log.d("LOG", "ModelDescriptionFragment: onCreate");
         if (savedInstanceState != null) {
             modelName = savedInstanceState.getString(MODEL_NAME);
         }
@@ -30,15 +30,15 @@ public class ModelViewFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("LOG", "ModelViewFragment: onCreateView");
-        View rootView = inflater.inflate(R.layout.fragment_model_view, container, false);
+        Log.d("LOG", "ModelDescriptionFragment: onCreateView");
+        View rootView = inflater.inflate(R.layout.fragment_model_description, container, false);
         return rootView;
     }
     
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("LOG", "ModelViewFragment: onStart");
+        Log.d("LOG", "ModelDescriptionFragment: onStart");
         String className = modelName.replace("/", "");
         String fullClassName = "com.dmitry_simakov.queue.models." + className;
         try {
