@@ -21,23 +21,27 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/lambda"
+                android:id="@+id/lambda_ET"
                 android:hint="@string/lambda"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:ems="5"
+                android:inputType="numberDecimal"
                 android:layout_margin="@dimen/element_margin"/>
 
             <EditText
-                android:id="@+id/mu"
+                android:id="@+id/mu_ET"
                 android:hint="@string/mu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:ems="5"
+                android:inputType="numberDecimal"
                 android:layout_margin="@dimen/element_margin"/>
 
             <Button
-                android:id="@+id/ok_button"
+                android:id="@+id/ok_Btn"
                 android:text="@string/ok"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -46,6 +50,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/t_TV"
             android:text="@string/t"
             android:textSize="24sp"
             android:gravity="center_vertical"
@@ -55,6 +60,7 @@
             android:layout_margin="@dimen/element_margin"/>
 
         <TextView
+            android:id="@+id/k_TV"
             android:text="@string/k"
             android:textSize="24sp"
             android:gravity="center_vertical"

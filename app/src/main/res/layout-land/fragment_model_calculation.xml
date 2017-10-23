@@ -28,7 +28,7 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/lambda"
+                android:id="@+id/lambda_ET"
                 android:hint="@string/lambda"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_margin="@dimen/element_margin"/>
 
             <EditText
-                android:id="@+id/mu"
+                android:id="@+id/mu_ET"
                 android:hint="@string/mu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_margin="@dimen/element_margin"/>
 
             <Button
-                android:id="@+id/ok_button"
+                android:id="@+id/ok_Btn"
                 android:text="@string/ok"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

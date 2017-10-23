@@ -22,7 +22,7 @@ import java.util.List;
 public class BarGraphFragment extends Fragment {
     
     private BarChart chart;
-    private float[] XValues;
+    
     private float[] YValues;
     
     @Override
@@ -30,24 +30,24 @@ public class BarGraphFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bar_graph, container, false);
     
+        // Получаем значения из активити
         Bundle bundle = getArguments();
         if (bundle != null) {
-            XValues = bundle.getFloatArray("XValues");
-            YValues = bundle.getFloatArray("YValues");
-            
+            YValues = bundle.getFloatArray(ModelCalculationFragment.P_VALUES);
         }
     
+        // Содздаём гистограмму
         chart = new BarChart(getActivity());
         chart.setLayoutParams(new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         FrameLayout frameLayout = v.findViewById(R.id.bar_graph_frame);
         frameLayout.addView(chart);
     
+        // Задаём значения гистограмме
         List<BarEntry> entries = new ArrayList<BarEntry>();
-        for (int i = 0; i < XValues.length; i++) {
-            entries.add(new BarEntry(XValues[i], YValues[i]));
+        for (int i = 0; i < YValues.length; i++) {
+            entries.add(new BarEntry(i, YValues[i]));
         }
-    
         BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
     
         // подготовим цвета
@@ -63,7 +63,7 @@ public class BarGraphFragment extends Fragment {
     
         // Настройки значений над столбцами
         dataSet.setValueTextColor(grey900);
-        dataSet.setValueTextSize(14f);
+        dataSet.setValueTextSize(10f);
         //dataSet.setDrawValues(false);
         
         BarData data = new BarData(dataSet);
