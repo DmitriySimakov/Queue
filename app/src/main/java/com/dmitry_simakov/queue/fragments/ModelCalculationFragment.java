@@ -18,9 +18,6 @@ import com.dmitry_simakov.queue.R;
 public class ModelCalculationFragment extends Fragment {
     
     FrameLayout container;
-    BarGraphFragment barGraphFragment;
-    GraphFragment graphFragment;
-    TableFragment tableFragment;
     final static String TAG_1 = "BAR_GRAPH";
     final static String TAG_2 = "GRAPH";
     final static String TAG_3 = "TABLE";
@@ -44,9 +41,6 @@ public class ModelCalculationFragment extends Fragment {
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_model_calculation, container, false);
-    
-        BottomNavigationView navigation = (BottomNavigationView) v.findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         
         XValues = new float[NUM_OF_VALUES];
         YValues = new float[NUM_OF_VALUES];
@@ -57,6 +51,23 @@ public class ModelCalculationFragment extends Fragment {
             YValues[i] = (float) Math.random() * 1000;
         }
         // TODO
+    
+        FragmentManager myFragmentManager = getFragmentManager();
+        Fragment fragment = null;
+        Bundle args = new Bundle();
+        args.putFloatArray("XValues", XValues);
+        args.putFloatArray("YValues", YValues);
+        //switch (/* Settings choice */) {
+        //    case R.id.bar_graph:
+                fragment = new BarGraphFragment();
+        //        break;
+        //    case R.id.graph:
+        //        fragment = new GraphFragment();
+        //        break;
+        //}
+        
+        fragment.setArguments(args);
+        myFragmentManager.beginTransaction().replace(R.id.p_frame, fragment).commit();
         
         return v;
     }
@@ -69,36 +80,4 @@ public class ModelCalculationFragment extends Fragment {
     public void setModel(String modelName) {
         this.modelName = modelName;
     }
-    
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentManager myFragmentManager = getFragmentManager();
-            Fragment fragment = null;
-            Bundle args = new Bundle();
-            args.putFloatArray("XValues", XValues);
-            args.putFloatArray("YValues", YValues);
-            switch (item.getItemId()) {
-                
-                case R.id.bar_graph:
-                    fragment = new BarGraphFragment();
-                    break;
-                case R.id.graph:
-                    fragment = new GraphFragment();
-                    break;
-                case R.id.table:
-                    Log.d("LOG", "table is not exist yet, sorry");
-                    break;
-            }
-            if (fragment != null) {
-                fragment.setArguments(args);
-                myFragmentManager.beginTransaction().replace(R.id.p_frame, fragment).commit();
-                return true;
-            } else {
-                return false;
-            }
-        }
-    };
 }

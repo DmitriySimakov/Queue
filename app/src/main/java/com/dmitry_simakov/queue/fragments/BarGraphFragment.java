@@ -63,7 +63,7 @@ public class BarGraphFragment extends Fragment {
     
         // Настройки значений над столбцами
         dataSet.setValueTextColor(grey900);
-        dataSet.setValueTextSize(16f);
+        dataSet.setValueTextSize(14f);
         //dataSet.setDrawValues(false);
         
         BarData data = new BarData(dataSet);
@@ -97,5 +97,4 @@ public class BarGraphFragment extends Fragment {
         super.onStart();
         chart.animateY(1500);
     }
-    
 }

@@ -18,7 +18,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/lambda"
@@ -40,7 +40,8 @@
                 android:id="@+id/ok_button"
                 android:text="@string/ok"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"/>
 
         </LinearLayout>
 
@@ -50,7 +51,7 @@
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_margin="@dimen/element_margin"/>
 
         <TextView
@@ -59,32 +60,27 @@
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_margin="@dimen/element_margin"/>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
-
-        <FrameLayout
-            android:id="@+id/p_frame"
+        <TextView
+            android:text="@string/p"
+            android:textSize="24sp"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="@dimen/element_margin"/>
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            app:menu="@menu/bottom_navigation"/>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/p_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/element_margin"/>
+
 
 </LinearLayout>

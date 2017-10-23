@@ -54,9 +54,6 @@ public class ModelActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         Log.d("LOG", "ModelActivity: setTabLayout successful");
-        
-        //ModelDescriptionFragment modelViewFragment = (ModelDescriptionFragment) getFragmentManager().findFragmentById(R.id.model_view_fragment);
-        //modelViewFragment.setModel(modelName);
     }
     
     @Override

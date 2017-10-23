@@ -108,5 +108,4 @@ public class GraphFragment extends Fragment {
         super.onStart();
         chart.animateY(1500);
     }
-    
 }
