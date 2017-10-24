@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
@@ -106,20 +107,38 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     
     @Override
     public void onClick(View view) {
-        lambda = Float.valueOf(lambdaET.getText().toString());
-        mu = Float.valueOf(muET.getText().toString());
+        String lambdaStr = lambdaET.getText().toString();
+        String muStr = muET.getText().toString();
+        if (lambdaStr.trim().length() == 0) {
+            Toast.makeText(getActivity(), "Please enter lambda", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (muStr.trim().length() == 0) {
+            Toast.makeText(getActivity(), "Please enter mu", Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            lambda = Float.parseFloat(lambdaStr);
+            mu = Float.parseFloat(muStr);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         lambdaET.setText("");
         muET.setText("");
         if (model.setValues(lambda, mu)) {
             model.getP(PValues);
-            
+        
             k = model.getK();
             t = model.getT();
             kTV.setText("k = " + k);
             tTV.setText("t = " + t);
+            createGraphFragment();
+        } else {
+            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_LONG).show();
+            return;
         }
-        
-        createGraphFragment();
     }
     
     private void createGraphFragment() {

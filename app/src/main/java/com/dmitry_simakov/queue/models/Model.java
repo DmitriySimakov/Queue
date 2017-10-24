@@ -21,10 +21,13 @@ public abstract class Model {
     }
     
     public boolean setValues(float lambda, float mu) {
-        this.lambda = lambda;
-        this.mu = mu;
-        ro = lambda/mu;
-        return true;
+        if ((lambda > 0) && (mu > 0)) {
+            this.lambda = lambda;
+            this.mu = mu;
+            ro = lambda / mu;
+            return true;
+        }
+        return false;
     }
     
     abstract public void getP(float[] P);

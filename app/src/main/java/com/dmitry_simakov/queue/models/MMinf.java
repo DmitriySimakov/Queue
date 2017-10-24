@@ -2,6 +2,8 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
+import java.math.BigInteger;
+
 public class MMinf extends Model {
     
     public static final String NAME = "M/M/inf";
@@ -13,16 +15,29 @@ public class MMinf extends Model {
     
     @Override
     public void getP(float[] P) {
-        
+        for (int k = 0; k < P.length; k++) {
+            int kFactorial = 1; // 10! = 3628800, max int = 2147483647
+            for (int i = 1; i <= k; i++) {
+                kFactorial = kFactorial * i;
+            }
+            
+            P[k] = (float) Math.pow(ro, k)/kFactorial * (float) Math.exp(-ro);
+        }
     }
     
     @Override
     public float getK() {
-        return 0;
+        if (ro == -1) {
+            return -1;
+        }
+        return lambda/mu;
     }
     
     @Override
     public float getT() {
-        return 0;
+        if (ro == -1) {
+            return -1;
+        }
+        return 1/mu;
     }
 }
