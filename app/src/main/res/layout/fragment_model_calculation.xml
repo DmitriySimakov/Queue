@@ -51,7 +51,6 @@
 
         <TextView
             android:id="@+id/t_TV"
-            android:text="@string/t"
             android:textSize="24sp"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
@@ -61,7 +60,6 @@
 
         <TextView
             android:id="@+id/k_TV"
-            android:text="@string/k"
             android:textSize="24sp"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
@@ -70,7 +68,7 @@
             android:layout_margin="@dimen/element_margin"/>
 
         <TextView
-            android:text="@string/p"
+            android:id="@+id/p_TV"
             android:textSize="24sp"
             android:gravity="center_vertical"
             android:layout_width="match_parent"

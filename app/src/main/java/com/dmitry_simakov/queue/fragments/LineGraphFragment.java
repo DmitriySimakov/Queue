@@ -20,7 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphFragment extends Fragment {
+public class LineGraphFragment extends Fragment {
     
     private LineChart chart;
     private float[] XValues;

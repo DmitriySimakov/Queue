@@ -9,13 +9,7 @@
     <string name="lambda">λ</string>
     <string name="mu">μ</string>
     <string name="ok">OK</string>
-    <string name="t">t =</string>
-    <string name="k">k =</string>
-    <string name="p">P =</string>
     <string name="bargraph">Гистограмма</string>
     <string name="graph">График</string>
     <string name="table">Таблица</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

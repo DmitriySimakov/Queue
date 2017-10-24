@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.dmitry_simakov.queue.fragments.ModelCalculationFragment;
 import com.dmitry_simakov.queue.fragments.ModelDescriptionFragment;
+import com.dmitry_simakov.queue.models.Model;
 
 public class ModelActivity extends AppCompatActivity {
     
@@ -32,10 +33,12 @@ public class ModelActivity extends AppCompatActivity {
         Log.d("LOG", "ModelActivity: onCreate");
         setContentView(R.layout.activity_model);
         
+        // Получаю имя выбранной модели
         Intent intent = getIntent();
         modelName = intent.getStringExtra(MODEL_NAME);
     
-        Toolbar toolbar = (Toolbar) findViewById(R.id.modelToolbar);
+        // Устанавливаю тулбар
+        Toolbar toolbar = (Toolbar) findViewById(R.id.model_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -43,17 +46,14 @@ public class ModelActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(modelName);
         }
-        Log.d("LOG", "ModelActivity: setSupportActionBar successful");
     
+        // Устанавливаю ViewPager
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        Log.d("LOG", "ModelActivity: setSectionsPagerAdapter successful");
     
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        Log.d("LOG", "ModelActivity: setTabLayout successful");
     }
     
     @Override
@@ -76,7 +76,6 @@ public class ModelActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     
-    
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -85,14 +84,16 @@ public class ModelActivity extends AppCompatActivity {
         
         @Override
         public Fragment getItem(int position) {
+            Bundle args = new Bundle();
+            args.putString(MODEL_NAME, modelName);
             switch (position) {
                 case 0:
                     ModelDescriptionFragment modelDescriptionFragment = new ModelDescriptionFragment();
-                    modelDescriptionFragment.setModel(modelName);
+                    modelDescriptionFragment.setArguments(args);
                     return modelDescriptionFragment;
                 case 1:
                     ModelCalculationFragment modelCalculationFragment = new ModelCalculationFragment();
-                    modelCalculationFragment.setModel(modelName);
+                    modelCalculationFragment.setArguments(args);
                     return modelCalculationFragment;
             }
             return null;
