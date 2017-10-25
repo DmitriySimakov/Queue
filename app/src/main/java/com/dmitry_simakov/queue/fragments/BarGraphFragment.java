@@ -29,6 +29,9 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     private float[] YValues;
     
+    TextView p1TV;
+    TextView pTV;
+    
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +42,10 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         if (bundle != null) {
             YValues = bundle.getFloatArray(ModelCalculationFragment.P_VALUES);
         }
+    
+        // Получаем TextViews для OnChartValueSelectedListener
+        p1TV = getActivity().findViewById(R.id.p1_TV);
+        pTV = getActivity().findViewById(R.id.p_TV);
     
         // Содздаём гистограмму
         chart = new BarChart(getActivity());
@@ -105,15 +112,14 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        TextView p1TV = getActivity().findViewById(R.id.p1_TV);
         int k = (int) e.getX();
         p1TV.setText("P[" + k + "] =");
-        TextView pTV = getActivity().findViewById(R.id.p_TV);
         pTV.setText("= " + e.getY());
     }
     
     @Override
     public void onNothingSelected() {
-        
+        p1TV.setText(getString(R.string.p_k));
+        pTV.setText("");
     }
 }

@@ -12,4 +12,5 @@
     <string name="bargraph">Гистограмма</string>
     <string name="graph">График</string>
     <string name="table">Таблица</string>
+    <string name="p_k">P[k] =</string>
 </resources>
