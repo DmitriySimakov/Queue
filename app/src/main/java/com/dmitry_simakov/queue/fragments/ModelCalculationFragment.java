@@ -88,13 +88,6 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         return v;
     }
     
-    public void onStart() {
-        super.onStart();
-        Log.d("LOG", "ModelDescriptionFragment: onStart");
-    
-        
-    }
-    
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
