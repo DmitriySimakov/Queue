@@ -1,5 +1,6 @@
 package com.dmitry_simakov.queue.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,9 +28,11 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     Button okBtn;
     TextView kTV;
     TextView tTV;
-    TextView pTV;
     
+    public static final String LAMBDA_VALUE = "LAMBDA_VALUE";
     float lambda;
+    
+    public static final String MU_VALUE = "MU_VALUE";
     float mu;
     
     public static final String K_VALUE = "K_VALUE";
@@ -44,6 +48,8 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
+            lambda = savedInstanceState.getFloat(LAMBDA_VALUE);
+            mu = savedInstanceState.getFloat(MU_VALUE);
             k = savedInstanceState.getFloat(K_VALUE);
             t = savedInstanceState.getFloat(T_VALUE);
             PValues = savedInstanceState.getFloatArray(P_VALUES);
@@ -69,12 +75,14 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         okBtn.setOnClickListener(this);
         tTV = v.findViewById(R.id.t_TV);
         kTV = v.findViewById(R.id.k_TV);
-        pTV = v.findViewById(R.id.p_TV);
         
         // Устанавливаю значния элементов
-        kTV.setText("k = " + k);
-        tTV.setText("t = " + t);
-        pTV.setText("P = ");
+        if (savedInstanceState != null) {
+            lambdaET.setHint(getString(R.string.lambda) + " = " + lambda);
+            muET.setHint(getString(R.string.mu) + " = " + mu);
+            kTV.setText(" = " + k);
+            tTV.setText(" = " + t);
+        }
         createGraphFragment();
         
         return v;
@@ -89,6 +97,8 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
+        savedInstanceState.putFloat(MU_VALUE, mu);
         savedInstanceState.putFloat(K_VALUE, k);
         savedInstanceState.putFloat(T_VALUE, t);
         savedInstanceState.putFloatArray(P_VALUES, PValues);
@@ -99,33 +109,54 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         String lambdaStr = lambdaET.getText().toString();
         String muStr = muET.getText().toString();
         if (lambdaStr.trim().length() == 0) {
-            Toast.makeText(getActivity(), "Please enter lambda", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Пожалуйста, введите lambda", Toast.LENGTH_LONG).show();
+            lambdaET.requestFocus();
             return;
         }
         if (muStr.trim().length() == 0) {
-            Toast.makeText(getActivity(), "Please enter mu", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Пожалуйста, введите mu", Toast.LENGTH_LONG).show();
+            muET.requestFocus();
             return;
         }
         try {
             lambda = Float.parseFloat(lambdaStr);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_LONG).show();
+            lambdaET.requestFocus();
+            return;
+        }
+        try {
             mu = Float.parseFloat(muStr);
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_LONG).show();
+            muET.requestFocus();
             return;
         }
         
         lambdaET.setText("");
         muET.setText("");
-        if (model.setValues(lambda, mu)) {
-            model.getP(PValues);
         
+        String error = model.setValues(lambda, mu);
+        if (error == null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(okBtn.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            
+            lambdaET.setHint(getString(R.string.lambda) + " = " + lambda);
+            muET.setHint(getString(R.string.mu) + " = " + mu);
+            
+            model.getP(PValues);
+    
             k = model.getK();
             t = model.getT();
-            kTV.setText("k = " + k);
-            tTV.setText("t = " + t);
+            kTV.setText(" = " + k);
+            tTV.setText(" = " + t);
             createGraphFragment();
+            lambdaET.clearFocus();
+            muET.clearFocus();
+    
         } else {
-            Toast.makeText(getActivity(), "Invalid data", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+            lambdaET.requestFocus();
             return;
         }
     }
@@ -145,6 +176,6 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         //}
     
         fragment.setArguments(args);
-        myFragmentManager.beginTransaction().replace(R.id.p_frame, fragment).commit();
+        myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();
     }
 }

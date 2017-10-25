@@ -1,8 +1,6 @@
 package com.dmitry_simakov.queue.fragments;
 
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +27,7 @@ public class LineGraphFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_graph, container, false);
+        View v = inflater.inflate(R.layout.fragment_line_graph, container, false);
         
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -40,7 +38,7 @@ public class LineGraphFragment extends Fragment {
         chart = new LineChart(getActivity());
         chart.setLayoutParams(new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        FrameLayout frameLayout = v.findViewById(R.id.graph_frame);
+        FrameLayout frameLayout = v.findViewById(R.id.line_graph_frame);
         frameLayout.addView(chart);
         
         List<Entry> entries = new ArrayList<Entry>();

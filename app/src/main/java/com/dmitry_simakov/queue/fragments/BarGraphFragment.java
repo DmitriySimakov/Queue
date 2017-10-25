@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.dmitry_simakov.queue.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -15,11 +16,14 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarGraphFragment extends Fragment {
+public class BarGraphFragment extends Fragment implements OnChartValueSelectedListener {
     
     private BarChart chart;
     
@@ -54,7 +58,6 @@ public class BarGraphFragment extends Fragment {
         Resources res = getResources();
         int white = res.getColor(R.color.white);
         int red700 = res.getColor(R.color.red_700);
-        int grey700 = res.getColor(R.color.grey_700);
         int grey900 = res.getColor(R.color.grey_900);
         
         // Настройки столбцов
@@ -82,6 +85,8 @@ public class BarGraphFragment extends Fragment {
         // настройки осей
         chart.getAxisLeft().setSpaceBottom(0); // убрать отступ баров от ординаты
         chart.getAxisRight().setEnabled(false);
+        
+        chart.setOnChartValueSelectedListener(this);
     
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -96,5 +101,19 @@ public class BarGraphFragment extends Fragment {
     public void onStart() {
         super.onStart();
         chart.animateY(1500);
+    }
+    
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        TextView p1TV = getActivity().findViewById(R.id.p1_TV);
+        int k = (int) e.getX();
+        p1TV.setText("P[" + k + "] =");
+        TextView pTV = getActivity().findViewById(R.id.p_TV);
+        pTV.setText("= " + e.getY());
+    }
+    
+    @Override
+    public void onNothingSelected() {
+        
     }
 }

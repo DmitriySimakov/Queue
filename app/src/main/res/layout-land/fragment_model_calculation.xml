@@ -9,80 +9,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <FrameLayout
-        android:id="@+id/p_frame"
+        android:id="@+id/graph_frame"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_margin="@dimen/element_margin"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/lambda_ET"
-                android:hint="@string/lambda"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ems="5"
-                android:inputType="numberDecimal"
-                android:layout_margin="@dimen/element_margin"/>
-
-            <EditText
-                android:id="@+id/mu_ET"
-                android:hint="@string/mu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ems="5"
-                android:inputType="numberDecimal"
-                android:layout_margin="@dimen/element_margin"/>
-
-            <Button
-                android:id="@+id/ok_Btn"
-                android:text="@string/ok"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/t_TV"
-            android:textSize="24sp"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/element_margin"/>
-
-        <TextView
-            android:id="@+id/k_TV"
-            android:textSize="24sp"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/element_margin"/>
-
-        <TextView
-            android:id="@+id/p_TV"
-            android:textSize="24sp"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/element_margin"/>
-
-    </LinearLayout>
+    <include layout="@layout/content_model_calc_frag"
+             android:layout_height="match_parent"
+             android:layout_width="0dp"
+             android:layout_weight="1"/>
 
 </LinearLayout>

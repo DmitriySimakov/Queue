@@ -34,14 +34,14 @@ public abstract class Model {
         return BDPImage;
     }
     
-    public boolean setValues(float lambda, float mu) {
+    public String setValues(float lambda, float mu) {
         if ((lambda > 0) && (mu > 0)) {
             this.lambda = lambda;
             this.mu = mu;
             ro = lambda / mu;
-            return true;
+            return null;
         }
-        return false;
+        return "lambda и mu должны быть больше 0";
     }
     
     abstract public void getP(float[] P);

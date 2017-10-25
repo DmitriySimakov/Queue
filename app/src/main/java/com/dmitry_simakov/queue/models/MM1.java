@@ -11,11 +11,11 @@ public class MM1 extends Model {
         BDPImage = R.drawable.m_m_1__2;
     }
     
-    public boolean setValues(float lambda, float mu) {
+    public String setValues(float lambda, float mu) {
         if (lambda/mu < 1) {
             return super.setValues(lambda, mu);
         }
-        return false;
+        return "Для модели M/M/1 должно выполняться:\nlambda < mu";
     }
     
     @Override
