@@ -11,6 +11,20 @@ public abstract class Model {
     protected float mu;
     protected float ro = -1;
     
+    public static Model getModelByName(String name) {
+        String className = name.replace("/", "");
+        String fullClassName = "com.dmitry_simakov.queue.models." + className;
+        try {
+            return (Model) Class.forName(fullClassName).newInstance();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     
     public int getModelImage() {
         return modelImage;

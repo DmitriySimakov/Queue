@@ -60,18 +60,7 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
             modelName = bundle.getString(ModelActivity.MODEL_NAME);
         }
     
-        // Загружаю класс модели по имени
-        String className = modelName.replace("/", "");
-        String fullClassName = "com.dmitry_simakov.queue.models." + className;
-        try {
-            model = (Model) Class.forName(fullClassName).newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        model = Model.getModelByName(modelName);
         
         // Нахожу элементы View по их id
         lambdaET = v.findViewById(R.id.lambda_ET);

@@ -15,12 +15,11 @@ public class MMinf extends Model {
     
     @Override
     public void getP(float[] P) {
+        int kFactorial = 1; // 10! = 3628800, max int = 2147483647
         for (int k = 0; k < P.length; k++) {
-            int kFactorial = 1; // 10! = 3628800, max int = 2147483647
-            for (int i = 1; i <= k; i++) {
-                kFactorial = kFactorial * i;
+            if (k >= 2) {
+                kFactorial *= k;
             }
-            
             P[k] = (float) Math.pow(ro, k)/kFactorial * (float) Math.exp(-ro);
         }
     }

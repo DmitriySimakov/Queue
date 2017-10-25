@@ -27,36 +27,15 @@ public class ModelDescriptionFragment extends Fragment {
         if (bundle != null) {
             modelName = bundle.getString(ModelActivity.MODEL_NAME);
         }
+    
+        model = Model.getModelByName(modelName);
+    
+        ImageView modelImageView = v.findViewById(R.id.modelImageView);
+        modelImageView.setImageResource(model.getModelImage());
+    
+        ImageView RDDImageView = v.findViewById(R.id.BDPImageView);
+        RDDImageView.setImageResource(model.getBDPImage());
         
         return v;
-    }
-    
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("LOG", "ModelDescriptionFragment: onStart");
-
-        // Загружаю класс модели по имени
-        String className = modelName.replace("/", "");
-        String fullClassName = "com.dmitry_simakov.queue.models." + className;
-        try {
-            model = (Model) Class.forName(fullClassName).newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        
-        View view = getView();
-        if (view != null) {
-            Log.d("LOG", "view!=null");
-            ImageView modelImageView = view.findViewById(R.id.modelImageView);
-            modelImageView.setImageResource(model.getModelImage());
-            
-            ImageView RDDImageView = view.findViewById(R.id.BDPImageView);
-            RDDImageView.setImageResource(model.getBDPImage());
-        }
     }
 }
