@@ -9,6 +9,10 @@ public class MM1 extends Model {
     public MM1() {
         modelImage = R.drawable.m_m_1__1;
         BDPImage = R.drawable.m_m_1__2;
+        
+        kFormula = R.drawable.mm1_k;
+        tFormula = R.drawable.mm1_t;
+        pFormula = R.drawable.mm1_p;
     }
     
     public String setValues(float lambda, float mu) {

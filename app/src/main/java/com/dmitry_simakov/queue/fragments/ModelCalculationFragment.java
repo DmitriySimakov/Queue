@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,10 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     
     private String modelName;
     private Model model;
+    
+    ImageView tFormula;
+    ImageView kFormula;
+    ImageView pFormula;
     
     EditText lambdaET;
     EditText muET;
@@ -69,6 +74,13 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         model = Model.getModelByName(modelName);
         
         // Нахожу элементы View по их id
+        kFormula = v.findViewById(R.id.k_formula_IV);
+        kFormula.setImageResource(model.getKFormula());
+        tFormula = v.findViewById(R.id.t_formula_IV);
+        tFormula.setImageResource(model.getTFormula());
+        pFormula = v.findViewById(R.id.p_formula_IV);
+        pFormula.setImageResource(model.getPFormula());
+        
         lambdaET = v.findViewById(R.id.lambda_ET);
         muET = v.findViewById(R.id.mu_ET);
         okBtn = v.findViewById(R.id.ok_Btn);

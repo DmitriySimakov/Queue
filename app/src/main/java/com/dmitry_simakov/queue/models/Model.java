@@ -7,6 +7,10 @@ public abstract class Model {
     protected int modelImage = R.drawable.empty_image;
     protected int BDPImage = R.drawable.empty_image; // Birth–death process scheme
     
+    protected int kFormula = R.drawable.empty_image;
+    protected int tFormula = R.drawable.empty_image;
+    protected int pFormula = R.drawable.empty_image;
+    
     protected float lambda;
     protected float mu;
     protected float ro = -1;
@@ -32,6 +36,18 @@ public abstract class Model {
     
     public int getBDPImage() {
         return BDPImage;
+    }
+    
+    public int getKFormula() {
+        return kFormula;
+    }
+    
+    public int getTFormula() {
+        return tFormula;
+    }
+    
+    public int getPFormula() {
+        return pFormula;
     }
     
     public String setValues(float lambda, float mu) {
