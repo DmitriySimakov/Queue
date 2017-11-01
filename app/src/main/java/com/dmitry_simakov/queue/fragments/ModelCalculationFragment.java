@@ -21,6 +21,8 @@ import com.dmitry_simakov.queue.models.Model;
 
 public class ModelCalculationFragment extends Fragment implements View.OnClickListener {
     
+    private Toast toast = null;
+    
     private String modelName;
     private Model model;
     
@@ -72,6 +74,8 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         }
     
         model = Model.getModelByName(modelName);
+    
+        toast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
         
         // Нахожу элементы View по их id
         kFormula = v.findViewById(R.id.k_formula_IV);
@@ -101,6 +105,12 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
     }
     
     @Override
+    public void onPause() {
+        super.onPause();
+        toast.cancel();
+    }
+    
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
         savedInstanceState.putFloat(MU_VALUE, mu);
@@ -114,26 +124,34 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
         String lambdaStr = lambdaET.getText().toString();
         String muStr = muET.getText().toString();
         if (lambdaStr.trim().length() == 0) {
-            Toast.makeText(getActivity(), "Пожалуйста, введите lambda", Toast.LENGTH_LONG).show();
+            toast.setText("Пожалуйста, введите lambda");
+            toast.show();
+            //Toast.makeText(getActivity(), "Пожалуйста, введите lambda", Toast.LENGTH_SHORT).show();
             lambdaET.requestFocus();
             return;
         }
         if (muStr.trim().length() == 0) {
-            Toast.makeText(getActivity(), "Пожалуйста, введите mu", Toast.LENGTH_LONG).show();
+            toast.setText("Пожалуйста, введите mu");
+            toast.show();
+            //Toast.makeText(getActivity(), "Пожалуйста, введите mu", Toast.LENGTH_SHORT).show();
             muET.requestFocus();
             return;
         }
         try {
             lambda = Float.parseFloat(lambdaStr);
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_LONG).show();
+            toast.setText("Некорректный ввод");
+            toast.show();
+            //Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_SHORT).show();
             lambdaET.requestFocus();
             return;
         }
         try {
             mu = Float.parseFloat(muStr);
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_LONG).show();
+            toast.setText("Некорректный ввод");
+            toast.show();
+            //Toast.makeText(getActivity(), "Некорректный ввод", Toast.LENGTH_SHORT).show();
             muET.requestFocus();
             return;
         }
@@ -160,7 +178,9 @@ public class ModelCalculationFragment extends Fragment implements View.OnClickLi
             muET.clearFocus();
     
         } else {
-            Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+            toast.setText(error);
+            toast.show();
+            //Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             lambdaET.requestFocus();
             return;
         }
