@@ -9,6 +9,8 @@ public class MMinf extends Model {
     public static final String NAME = "M/M/inf";
     
     public MMinf() {
+        name = NAME;
+        
         modelImage = R.drawable.m_m_inf__1;
         BDPImage = R.drawable.m_m_inf__2;
     }

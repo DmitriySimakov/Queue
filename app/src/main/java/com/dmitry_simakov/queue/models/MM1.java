@@ -7,6 +7,8 @@ public class MM1 extends Model {
     public static final String NAME = "M/M/1";
     
     public MM1() {
+        name = NAME;
+        
         modelImage = R.drawable.m_m_1__1;
         BDPImage = R.drawable.m_m_1__2;
         

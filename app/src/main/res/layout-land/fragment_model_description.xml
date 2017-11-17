@@ -6,16 +6,22 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/frame_padding"
+    android:padding="@dimen/card_padding"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/textView"
-        android:text="@string/text_description"
+    <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_margin="@dimen/element_margin"/>
+        android:layout_margin="@dimen/card_margin">
+
+        <TextView
+            android:id="@+id/textView"
+            android:text="@string/text_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,23 +29,35 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/modelImageView"
-            android:contentDescription="@string/model_scheme"
-            app:srcCompat="@drawable/empty_image"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="@dimen/element_margin"/>
+            android:layout_margin="@dimen/card_margin">
 
-        <ImageView
-            android:id="@+id/BDPImageView"
-            android:contentDescription="@string/BDP_scheme"
-            app:srcCompat="@drawable/empty_image"
+            <ImageView
+                android:id="@+id/modelImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/model_scheme"
+                app:srcCompat="@drawable/empty_image"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="@dimen/element_margin"/>
+            android:layout_margin="@dimen/card_margin">
+
+            <ImageView
+                android:id="@+id/BDPImageView"
+                android:contentDescription="@string/BDP_scheme"
+                app:srcCompat="@drawable/empty_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

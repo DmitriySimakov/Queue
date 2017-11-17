@@ -8,9 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dmitry_simakov.queue.fragments.ModelsListFragment;
 
-public class MainActivity extends AppCompatActivity implements ModelsListFragment.ModelsListListener {
+public class MainActivity extends AppCompatActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +18,6 @@ public class MainActivity extends AppCompatActivity implements ModelsListFragmen
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
-    }
-    
-    @Override
-    public void itemClicked(int id) {
-        Log.d("LOG", "MainActivity: itemClicked");
-        Intent intent = new Intent(this, ModelActivity.class);
-        String modelName = ModelsListFragment.getModelName(id);
-        intent.putExtra(ModelActivity.MODEL_NAME, modelName);
-        startActivity(intent);
     }
     
     @Override
