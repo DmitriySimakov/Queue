@@ -24,7 +24,7 @@
 
     </android.support.v7.widget.CardView>
 
-    <include layout="@layout/content_model_calc_frag"
+    <include layout="@layout/fragment_model_calc_content"
              android:layout_height="match_parent"
              android:layout_width="0dp"
              android:layout_weight="1"/>

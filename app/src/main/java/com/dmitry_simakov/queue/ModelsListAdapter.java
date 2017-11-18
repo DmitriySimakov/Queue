@@ -2,7 +2,6 @@ package com.dmitry_simakov.queue;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dmitry_simakov.queue.models.Model;
+import com.dmitry_simakov.queue.models.ModelAB;
 
-import java.util.List;
+import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class ModelsListAdapter extends RecyclerView.Adapter<ModelsListAdapter.ViewHolder> {
     
     private Context context;
-    private List<Model> data;
     
-    public ModelsListAdapter(List<Model> data, Context context) {
-        this.data = data;
+    public ModelsListAdapter(Context context) {
         this.context = context;
     }
     
@@ -43,8 +40,7 @@ public class ModelsListAdapter extends RecyclerView.Adapter<ModelsListAdapter.Vi
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, ModelActivity.class);
-            String modelName = data.get(getAdapterPosition()).getName();
-            intent.putExtra(ModelActivity.MODEL_NAME, modelName);
+            intent.putExtra(ModelActivity.MODEL_ID, getAdapterPosition());
             context.startActivity(intent);
         }
     }
@@ -57,13 +53,13 @@ public class ModelsListAdapter extends RecyclerView.Adapter<ModelsListAdapter.Vi
     
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Model model = data.get(position);
+        ModelAB model = MODELS[position];
         holder.modelName.setText(model.getName());
         holder.image.setImageResource(model.getModelImage());
     }
     
     @Override
     public int getItemCount() {
-        return data.size();
+        return MODELS.length;
     }
 }

@@ -1,9 +1,9 @@
 package com.dmitry_simakov.queue.fragments;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,27 +25,27 @@ import java.util.List;
 
 public class BarGraphFragment extends Fragment implements OnChartValueSelectedListener {
     
-    private BarChart chart;
+    protected BarChart chart;
     
-    private float[] YValues;
+    protected float[] y1_Values;
     
-    TextView p1TV;
-    TextView pTV;
+    protected TextView P_TextView;
     
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    
+        Log.d("LOG", "BarGraphFragment: onCreateView");
         View v = inflater.inflate(R.layout.fragment_bar_graph, container, false);
     
         // Получаем значения из активити
         Bundle bundle = getArguments();
         if (bundle != null) {
-            YValues = bundle.getFloatArray(ModelCalculationFragment.P_VALUES);
+            getBundle(bundle);
         }
     
         // Получаем TextViews для OnChartValueSelectedListener
-        p1TV = getActivity().findViewById(R.id.p1_TV);
-        pTV = getActivity().findViewById(R.id.p_TV);
+        P_TextView = getActivity().findViewById(R.id.Pk_TV);
     
         // Содздаём гистограмму
         chart = new BarChart(getActivity());
@@ -53,30 +53,10 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         FrameLayout frameLayout = v.findViewById(R.id.bar_graph_frame);
         frameLayout.addView(chart);
-    
+        
         // Задаём значения гистограмме
-        List<BarEntry> entries = new ArrayList<BarEntry>();
-        for (int i = 0; i < YValues.length; i++) {
-            entries.add(new BarEntry(i, YValues[i]));
-        }
-        BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
-    
-        // подготовим цвета
-        Resources res = getResources();
-        int white = res.getColor(R.color.white);
-        int red700 = res.getColor(R.color.red_700);
-        int grey900 = res.getColor(R.color.grey_900);
-        
-        // Настройки столбцов
-        dataSet.setColor(red700);
-        dataSet.setHighLightColor(white);
-    
-        // Настройки значений над столбцами
-        dataSet.setValueTextColor(grey900);
-        dataSet.setValueTextSize(10f);
-        //dataSet.setDrawValues(false);
-        
-        BarData data = new BarData(dataSet);
+        BarData data = new BarData();
+        prepareData(data);
         data.setBarWidth(0.9f); // Ширина бара определяется X величиной
     
         // настройки гистограммы
@@ -104,22 +84,52 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         return v;
     }
     
+    protected void getBundle(Bundle bundle) {
+        Log.d("LOG", "BarGraphFragment: getBundle");
+        y1_Values = bundle.getFloatArray(MM1_MMinf_CalculationFragment.P_VALUES);
+    }
+    
+    protected void prepareData(BarData data) {
+        Log.d("LOG", "BarGraphFragment: prepareData");
+        // подготовим цвета
+        Resources res = getResources();
+        int white = res.getColor(R.color.white);
+        int red700 = res.getColor(R.color.red_700);
+        int grey900 = res.getColor(R.color.grey_900);
+        
+        List<BarEntry> entries = new ArrayList<>();
+        for (int i = 0; i < y1_Values.length; i++) {
+            entries.add(new BarEntry(i, y1_Values[i]));
+        }
+        BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
+    
+        // Настройки столбцов
+        dataSet.setColor(red700);
+        dataSet.setHighLightColor(white);
+    
+        // Настройки значений над столбцами
+        dataSet.setValueTextColor(grey900);
+        dataSet.setValueTextSize(10f);
+        //dataSet.setDrawValues(false);
+        
+        data.addDataSet(dataSet);
+    }
+    
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("LOG", "BarGraphFragment: onStart");
         chart.animateY(1500);
     }
     
     @Override
     public void onValueSelected(Entry e, Highlight h) {
         int k = (int) e.getX();
-        p1TV.setText("P[" + k + "] =");
-        pTV.setText("= " + e.getY());
+        P_TextView.setText("P[" + k + "] = " + e.getY());
     }
     
     @Override
     public void onNothingSelected() {
-        p1TV.setText(getString(R.string.p_k));
-        pTV.setText("");
+        P_TextView.setText("");
     }
 }

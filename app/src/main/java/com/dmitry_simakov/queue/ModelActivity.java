@@ -14,18 +14,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dmitry_simakov.queue.fragments.ModelCalculationFragment;
+import com.dmitry_simakov.queue.fragments.MM1_MMinf_CalculationFragment;
+import com.dmitry_simakov.queue.fragments.MMV_CalculationFragment;
 import com.dmitry_simakov.queue.fragments.ModelDescriptionFragment;
-import com.dmitry_simakov.queue.models.Model;
+
+import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class ModelActivity extends AppCompatActivity {
     
-    public static final String MODEL_NAME = "MODEL_NAME";
-    
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    
-    private String modelName;
+    public static final String MODEL_ID = "MODEL_ID";
+    private int id;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,26 +31,26 @@ public class ModelActivity extends AppCompatActivity {
         Log.d("LOG", "ModelActivity: onCreate");
         setContentView(R.layout.activity_model);
         
-        // Получаю имя выбранной модели
+        // Получаю id выбранной модели
         Intent intent = getIntent();
-        modelName = intent.getStringExtra(MODEL_NAME);
+        id = intent.getIntExtra(MODEL_ID, 0);
     
         // Устанавливаю тулбар
-        Toolbar toolbar = (Toolbar) findViewById(R.id.model_toolbar);
+        Toolbar toolbar = findViewById(R.id.model_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(modelName);
+            actionBar.setTitle(MODELS[id].getName());
         }
     
         // Устанавливаю ViewPager
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
     
@@ -85,16 +83,33 @@ public class ModelActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle args = new Bundle();
-            args.putString(MODEL_NAME, modelName);
+            args.putInt(MODEL_ID, id);
             switch (position) {
                 case 0:
                     ModelDescriptionFragment modelDescriptionFragment = new ModelDescriptionFragment();
                     modelDescriptionFragment.setArguments(args);
                     return modelDescriptionFragment;
                 case 1:
-                    ModelCalculationFragment modelCalculationFragment = new ModelCalculationFragment();
-                    modelCalculationFragment.setArguments(args);
-                    return modelCalculationFragment;
+                    switch (id) {
+                        // MM1
+                        case 0:
+                        // MM∞
+                        case 1:
+                            MM1_MMinf_CalculationFragment modelCalculationFragment = new MM1_MMinf_CalculationFragment();
+                            modelCalculationFragment.setArguments(args);
+                            return modelCalculationFragment;
+                        // MMV
+                        case 2:
+                            MMV_CalculationFragment mmvCalculationFragment = new MMV_CalculationFragment();
+                            mmvCalculationFragment.setArguments(args);
+                            return mmvCalculationFragment;
+                        // MMVV
+//                        case 3:
+//                            MMVV_CalculationFragment mmvvCalculationFragment = new MMVV_CalculationFragment();
+//                            mmvvCalculationFragment.setArguments(args);
+//                            return mmvvCalculationFragment;
+                    }
+                    
             }
             return null;
         }

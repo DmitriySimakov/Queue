@@ -10,25 +10,25 @@ import android.widget.ImageView;
 
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.models.Model;
+import com.dmitry_simakov.queue.models.ModelAB;
+
+import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class ModelDescriptionFragment extends Fragment {
-    
-    private Model model;
-    private String modelName;
     
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("LOG", "ModelDescriptionFragment: onCreateView");
         View v = inflater.inflate(R.layout.fragment_model_description, container, false);
-        
+    
+        int id = 0;
         Bundle bundle = getArguments();
         if (bundle != null) {
-            modelName = bundle.getString(ModelActivity.MODEL_NAME);
+            id = bundle.getInt(ModelActivity.MODEL_ID);
         }
-    
-        model = Model.getModelByName(modelName);
+        
+        ModelAB model = MODELS[id];
     
         ImageView modelImageView = v.findViewById(R.id.modelImageView);
         modelImageView.setImageResource(model.getModelImage());

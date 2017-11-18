@@ -2,12 +2,10 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public class MM1 extends Model {
-    
-    public static final String NAME = "M/M/1";
+public class MM1 extends ModelAB {
     
     public MM1() {
-        name = NAME;
+        name = "M/M/1";
         
         modelImage = R.drawable.m_m_1__1;
         BDPImage = R.drawable.m_m_1__2;
@@ -17,33 +15,26 @@ public class MM1 extends Model {
         pFormula = R.drawable.mm1_p;
     }
     
+    @Override
     public String setValues(float lambda, float mu) {
         if (lambda/mu < 1) {
             return super.setValues(lambda, mu);
         }
-        return "Для модели M/M/1 должно выполняться:\nlambda < mu";
+        return "Должно выполняться: λ/μ < 1";
     }
     
     @Override
-    public void getP(float[] P) {
-        for (int k = 0; k < P.length; k++) {
+    public void calculate() {
+        // Считаем k
+        k = ro/(1-ro);
+        
+        // Считаем t
+        t = (1/mu)/(1 - ro);
+        
+        // Считаем P
+        P = new float[11];
+        for (int k = 0; k <= 10; k++) {
             P[k] = (1 - ro) * (float) Math.pow(ro, k);
         }
-    }
-    
-    @Override
-    public float getK() {
-        if (ro == -1) {
-            return -1;
-        }
-        return ro/(1-ro);
-    }
-    
-    @Override
-    public float getT() {
-        if (ro == -1) {
-            return -1;
-        }
-        return (1/mu)/(1 - ro);
     }
 }
