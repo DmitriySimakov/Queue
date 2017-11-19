@@ -24,7 +24,7 @@ import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 public class Model_CalculationFragment extends Fragment implements View.OnClickListener {
     
     protected int id;
-    private Model model;
+    protected Model model;
     
     protected float lambda;
     protected EditText lambda_EditText;
@@ -99,7 +99,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected void findViews(View v) {
         lambda_EditText = v.findViewById(R.id.lambda_EditText);
         mu_EditText = v.findViewById(R.id.mu_EditText);
-        OK_Button = v.findViewById(R.id.ok_Button);
+        OK_Button = v.findViewById(R.id.OK_Button);
         OK_Button.setOnClickListener(this);
         t_TextView = v.findViewById(R.id.t_TextView);
         k_TextView = v.findViewById(R.id.k_TextView);
@@ -131,13 +131,9 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
-        saveInstanceStates(savedInstanceState);
-    }
-    
-    protected void saveInstanceStates(Bundle savedInstanceState) {
         savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
         savedInstanceState.putFloat(MU_VALUE, mu);
-        
+    
         savedInstanceState.putFloat(K_VALUE, k);
         savedInstanceState.putFloat(T_VALUE, t);
         savedInstanceState.putFloatArray(P_VALUES, P_Values);

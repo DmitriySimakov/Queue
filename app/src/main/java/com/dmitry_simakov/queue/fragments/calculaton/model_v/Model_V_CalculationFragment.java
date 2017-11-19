@@ -16,8 +16,6 @@ import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class Model_V_CalculationFragment extends Model_CalculationFragment {
     
-    Model_V model;
-    
     protected int V;
     protected EditText V_EditText;
     public static final String V_VALUE = "V_VALUE";
@@ -36,6 +34,14 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
         super.getSavedInstanceStates(savedInstanceState);
         Log.d("LOG", "Model_V_CalculationFragment: getSavedInstanceState");
         V = savedInstanceState.getInt(V_VALUE);
+        Pt = savedInstanceState.getFloat(Pt_VALUE);
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(V_VALUE, V);
+        savedInstanceState.putFloat(Pt_VALUE, Pt);
     }
     
     @Override
@@ -59,13 +65,6 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
     
             Pt_TextView.setText("Pt");
         }
-    }
-    
-    @Override
-    protected void saveInstanceStates(Bundle savedInstanceState) {
-        super.saveInstanceStates(savedInstanceState);
-        savedInstanceState.putInt(V_VALUE, V);
-        savedInstanceState.putFloat(Pt_VALUE, Pt);
     }
     
     @Override
@@ -111,21 +110,22 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
         mu_EditText.setText("");
         V_EditText.setText("");
         
-        String error = model.setValues(lambda, mu, V);
+        Model_V m = (Model_V) model;
+        String error = m.setValues(lambda, mu, V);
         if (error != null) {
             invalidInput(error, lambda_EditText);
             return;
         }
-        model.calculate();
+        m.calculate();
         
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(OK_Button.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         
         // Показать введённые данные
-        k = model.getK_();
-        t = model.getT_();
-        Pt = model.getPt();
+        k = m.getK_();
+        t = m.getT_();
+        Pt = m.getPt();
         refreshText(true);
     
         getP_Values();

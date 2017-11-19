@@ -15,6 +15,18 @@ public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     public static final String W_VALUES = "W_VALUES";
     
     @Override
+    protected void getSavedInstanceStates(Bundle savedInstanceState) {
+        super.getSavedInstanceStates(savedInstanceState);
+        W_Values = savedInstanceState.getFloatArray(W_VALUES);
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putFloatArray(W_VALUES, W_Values);
+    }
+    
+    @Override
     protected void refreshText(boolean b) {
         super.refreshText(b);
         if (b) {

@@ -46,7 +46,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         }
     
         // Получаем TextViews для OnChartValueSelectedListener
-        P_TextView = getActivity().findViewById(R.id.Pk_TV);
+        P_TextView = getActivity().findViewById(R.id.Pk_TextView);
     
         // Содздаём гистограмму
         chart = new BarChart(getActivity());
@@ -69,9 +69,9 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         //chart.setScaleEnabled(false);
         //chart.setDragEnabled(false);
         chart.setPinchZoom(true);
+        chart.setBottom(0);
         
         // настройки осей
-        chart.getAxisLeft().setSpaceBottom(0); // убрать отступ баров от ординаты
         chart.getAxisRight().setEnabled(false);
         
         chart.setOnChartValueSelectedListener(this);

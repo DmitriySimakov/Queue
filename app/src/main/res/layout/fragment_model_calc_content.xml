@@ -55,7 +55,7 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/N_ET"
+                android:id="@+id/N_EditText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/element_margin"
@@ -66,7 +66,7 @@
                 android:visibility="gone"/>
 
             <Button
-                android:id="@+id/ok_Button"
+                android:id="@+id/OK_Button"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
@@ -121,7 +121,7 @@
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/Pb_TV"
+                android:id="@+id/Pb_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/element_margin"
@@ -130,7 +130,7 @@
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/Pk_TV"
+                android:id="@+id/Pk_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
