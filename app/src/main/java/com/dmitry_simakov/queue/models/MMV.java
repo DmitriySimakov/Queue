@@ -2,7 +2,7 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public class MMV extends ModelABV {
+public class MMV extends Model_V {
     
     public MMV() {
         name = "M/M/V";
@@ -10,8 +10,8 @@ public class MMV extends ModelABV {
         modelImage = R.drawable.empty_image;
         BDPImage = R.drawable.empty_image;
     
-        kFormula = R.drawable.empty_image;
-        tFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.empty_image;
+        t_Formula = R.drawable.empty_image;
         PtFormula = R.drawable.empty_image;
         pFormula = R.drawable.empty_image;
     }
@@ -25,44 +25,40 @@ public class MMV extends ModelABV {
     
     @Override
     public void calculate() {
-        // Считаем γ
-        k = 1/(mu * (V - ro));
-    
-        // Считаем j
-        t = lambda * k;
-    
         // Считаем промежуточные значения
         P = new float[V + 6];
-        float roV = (float) Math.pow(ro, V);
-        float i_Factorial = 1;
-        for (int i = 0; i <= V; i++) {
-            if (i != 0) i_Factorial *= i;
-            P[i] = roV/i_Factorial;
-        }
-        double V_Factorial = i_Factorial;
-        double part1 = P[V];
-    
-        double denominator;
+        float roI = 1;
+        float factorial_i = 1;
         double sum = 0;
-        double factorialX = 1;
-        for (int x = 0; x <= V-1; x++) {
-            if (x != 0) factorialX *= x;
-            sum += Math.pow(ro, x)/factorialX;
+        for (int i = 0; i < V; i++) {
+            if (i >= 2) factorial_i *= i;
+            P[i] = roI/factorial_i; // считаю числитель и записываю в массив
+            sum += P[i]; // считаю сумму
+            roI *= ro; // Возвожу ро в следующую степень
         }
-        double part2 = part1 * V/(V-ro);
-        denominator = sum + part2;
-        
-        // Считаем Pt
-        Pt = (float) (part2/denominator);
-        
+        P[V] = roI/(factorial_i * V);
+        double part1 = P[V] * V/(V-ro);
+        double denominator = sum + part1;
+    
         // Считаем P
+        // Левая часть графика
         for (int k = 0; k <= V; k++) {
             P[k] = (float) (P[k] / denominator);
         }
-        float part3 = ro/V;
+        // Правая часть графика
+        float part2 = ro/V;
         for (int k = V + 1; k < P.length; k++) {
-            P[k] = P[V] * part3;
-            part3 *= ro/V;
+            P[k] = P[V] * part2;
+            part2 *= part2;
         }
+        
+        // Считаем Pt
+        Pt = (float) (part1/denominator);
+    
+        // Считаем γ_
+        k_ = 1/(mu * (V - ro));
+    
+        // Считаем j_
+        t_ = lambda * k_;
     }
 }

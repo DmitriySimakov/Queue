@@ -2,12 +2,14 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public class MMVVN extends ModelABV {
+public class MMVVN extends Model_V {
+    
+    private int N;
     
     private float alfa;
     private float A;
-    private int N;
     
+    private float Pb;
     private float PbFormula = R.drawable.empty_image;
     
     public MMVVN() {
@@ -16,8 +18,8 @@ public class MMVVN extends ModelABV {
         modelImage = R.drawable.empty_image;
         BDPImage = R.drawable.empty_image;
     
-        kFormula = R.drawable.empty_image;
-        tFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.empty_image;
+        t_Formula = R.drawable.empty_image;
         PtFormula = R.drawable.empty_image;
         pFormula = R.drawable.empty_image;
     }

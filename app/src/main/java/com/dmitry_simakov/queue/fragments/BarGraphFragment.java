@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dmitry_simakov.queue.R;
+import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -86,7 +87,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     protected void getBundle(Bundle bundle) {
         Log.d("LOG", "BarGraphFragment: getBundle");
-        y1_Values = bundle.getFloatArray(MM1_MMinf_CalculationFragment.P_VALUES);
+        y1_Values = bundle.getFloatArray(Model_CalculationFragment.P_VALUES);
     }
     
     protected void prepareData(BarData data) {

@@ -1,4 +1,4 @@
-package com.dmitry_simakov.queue.fragments;
+package com.dmitry_simakov.queue.fragments.calculaton.model_v;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.models.MMV;
+import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
+import com.dmitry_simakov.queue.models.Model_V;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
-public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
+public class Model_V_CalculationFragment extends Model_CalculationFragment {
     
-    private MMV model;
+    Model_V model;
     
     protected int V;
     protected EditText V_EditText;
@@ -25,19 +26,16 @@ public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
     protected TextView Pt_TextView;
     public static final String Pt_VALUE = "Pt_VALUE";
     
-    protected float[] W_Values = new float[6];
-    public static final String W_VALUES = "W_VALUES";
+    @Override
+    protected void setModel() {
+        model = (Model_V) MODELS[id];
+    }
     
     @Override
     protected void getSavedInstanceStates(Bundle savedInstanceState) {
         super.getSavedInstanceStates(savedInstanceState);
-        Log.d("LOG", "MMV_CalculationFragment: getSavedInstanceState");
+        Log.d("LOG", "Model_V_CalculationFragment: getSavedInstanceState");
         V = savedInstanceState.getInt(V_VALUE);
-    }
-    
-    @Override
-    protected void setModel() {
-        model = (MMV) MODELS[id];
     }
     
     @Override
@@ -50,16 +48,17 @@ public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
     }
     
     @Override
-    protected void fillHints() {
-        super.fillHints();
-        V_EditText.setHint("V = " + V);
-    }
+    protected void refreshText(boolean b) {
+        super.refreshText(b);
+        if (b) {
+            V_EditText.setHint("V = " + V);
     
-    @Override
-    protected void fillETs() {
-        k_TextView.setText("γ = " + k);
-        t_TextView.setText("j = " + t);
-        Pt_TextView.setText("Pt = " + Pt);
+            Pt_TextView.setText("Pt = " + Pt);
+        } else {
+            V_EditText.setHint("V");
+    
+            Pt_TextView.setText("Pt");
+        }
     }
     
     @Override
@@ -71,11 +70,11 @@ public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
     
     @Override
     public void onClick(View view) {
-        Log.d("LOG", "MMV_CalculationFragment: onClick");
+        Log.d("LOG", "Model_V_CalculationFragment: onClick");
         String lambdaStr = lambda_EditText.getText().toString();
         String muStr = mu_EditText.getText().toString();
         String vStr = V_EditText.getText().toString();
-    
+        
         if (lambdaStr.trim().length() == 0) {
             invalidInput("Пожалуйста, введите λ", lambda_EditText);
             return;
@@ -88,7 +87,7 @@ public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
             invalidInput("Пожалуйста, введите V", V_EditText);
             return;
         }
-    
+        
         try {
             lambda = Float.parseFloat(lambdaStr);
         } catch (Exception e) {
@@ -107,51 +106,33 @@ public class MMV_CalculationFragment extends MM1_MMinf_CalculationFragment {
             invalidInput("Некорректный ввод", V_EditText);
             return;
         }
-    
+        
         lambda_EditText.setText("");
         mu_EditText.setText("");
         V_EditText.setText("");
-    
+        
         String error = model.setValues(lambda, mu, V);
         if (error != null) {
             invalidInput(error, lambda_EditText);
             return;
         }
         model.calculate();
-    
+        
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(OK_Button.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    
+        
         // Показать введённые данные
-        lambda_EditText.setHint("λ = " + lambda);
-        mu_EditText.setHint("μ = " + mu);
-        V_EditText.setHint("V = " + V);
-    
-        k = model.getK();
-        k_TextView.setText("γ = " + k);
-    
-        t = model.getT();
-        t_TextView.setText("j = " + t);
-        
+        k = model.getK_();
+        t = model.getT_();
         Pt = model.getPt();
-        Pt_TextView.setText("Pt = " + Pt);
-        
-        float Pk_Values[] = model.getP();
-        P_Values = new float[V];
-        System.arraycopy(Pk_Values, 0, P_Values, 0, V);
-        System.arraycopy(Pk_Values, V, W_Values, 0, 6);
-        createGraphFragment();
+        refreshText(true);
     
+        getP_Values();
+        createGraphFragment();
+        
         lambda_EditText.clearFocus();
         mu_EditText.clearFocus();
         V_EditText.clearFocus();
-    }
-    
-    @Override
-    protected void prepareArgs(Bundle args) {
-        Log.d("LOG", "MMV_CalculationFragment: prepareArgs");
-        args.putFloatArray(P_VALUES, P_Values);
-        args.putFloatArray(W_VALUES, W_Values);
     }
 }

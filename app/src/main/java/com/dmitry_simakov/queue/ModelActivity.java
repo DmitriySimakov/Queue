@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dmitry_simakov.queue.fragments.MM1_MMinf_CalculationFragment;
-import com.dmitry_simakov.queue.fragments.MMV_CalculationFragment;
+import com.dmitry_simakov.queue.fragments.calculaton.MMVVN_CalculationFragment;
+import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
+import com.dmitry_simakov.queue.fragments.calculaton.model_v.MMVV_CalculationFragment;
+import com.dmitry_simakov.queue.fragments.calculaton.model_v.MMV_CalculationFragment;
 import com.dmitry_simakov.queue.fragments.ModelDescriptionFragment;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
@@ -95,7 +97,7 @@ public class ModelActivity extends AppCompatActivity {
                         case 0:
                         // MM∞
                         case 1:
-                            MM1_MMinf_CalculationFragment modelCalculationFragment = new MM1_MMinf_CalculationFragment();
+                            Model_CalculationFragment modelCalculationFragment = new Model_CalculationFragment();
                             modelCalculationFragment.setArguments(args);
                             return modelCalculationFragment;
                         // MMV
@@ -104,10 +106,15 @@ public class ModelActivity extends AppCompatActivity {
                             mmvCalculationFragment.setArguments(args);
                             return mmvCalculationFragment;
                         // MMVV
-//                        case 3:
-//                            MMVV_CalculationFragment mmvvCalculationFragment = new MMVV_CalculationFragment();
-//                            mmvvCalculationFragment.setArguments(args);
-//                            return mmvvCalculationFragment;
+                        case 3:
+                            MMVV_CalculationFragment mmvvCalculationFragment = new MMVV_CalculationFragment();
+                            mmvvCalculationFragment.setArguments(args);
+                            return mmvvCalculationFragment;
+                        // MMVVN
+                        case 4:
+                            MMVVN_CalculationFragment mmvvnCalculationFragment = new MMVVN_CalculationFragment();
+                            mmvvnCalculationFragment.setArguments(args);
+                            return mmvvnCalculationFragment;
                     }
                     
             }

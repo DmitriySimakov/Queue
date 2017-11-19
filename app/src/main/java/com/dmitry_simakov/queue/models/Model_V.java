@@ -2,11 +2,11 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public abstract class ModelABV extends ModelAB {
+public abstract class Model_V extends Model {
     
     protected int V;
-    protected float Pt;
     
+    protected float Pt;
     protected int PtFormula = R.drawable.empty_image;
     
     public String setValues(float lambda, float mu, int V) {

@@ -12,12 +12,14 @@ import com.dmitry_simakov.queue.ModelsListAdapter;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.models.MM1;
 import com.dmitry_simakov.queue.models.MMV;
+import com.dmitry_simakov.queue.models.MMVV;
+import com.dmitry_simakov.queue.models.MMVVN;
 import com.dmitry_simakov.queue.models.MMinf;
-import com.dmitry_simakov.queue.models.ModelAB;
+import com.dmitry_simakov.queue.models.Model;
 
 public class MainActivityFragment extends Fragment {
     
-    public static final ModelAB MODELS[] = {new MM1(), new MMinf(), new MMV()};
+    public static final Model MODELS[] = {new MM1(), new MMinf(), new MMV(), new MMVV(), new MMVVN()};
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

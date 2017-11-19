@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dmitry_simakov.queue.models.ModelAB;
+import com.dmitry_simakov.queue.models.Model;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
@@ -53,7 +53,7 @@ public class ModelsListAdapter extends RecyclerView.Adapter<ModelsListAdapter.Vi
     
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ModelAB model = MODELS[position];
+        Model model = MODELS[position];
         holder.modelName.setText(model.getName());
         holder.image.setImageResource(model.getModelImage());
     }

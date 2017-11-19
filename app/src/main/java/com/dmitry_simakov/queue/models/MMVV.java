@@ -2,7 +2,7 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public class MMVV extends ModelABV {
+public class MMVV extends Model_V {
     
     private float gamma;
     private float j;
@@ -13,8 +13,8 @@ public class MMVV extends ModelABV {
         modelImage = R.drawable.empty_image;
         BDPImage = R.drawable.empty_image;
     
-        kFormula = R.drawable.empty_image;
-        tFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.empty_image;
+        t_Formula = R.drawable.empty_image;
         PtFormula = R.drawable.empty_image;
         pFormula = R.drawable.empty_image;
     }
@@ -28,6 +28,29 @@ public class MMVV extends ModelABV {
     
     @Override
     public void calculate() {
+        // Считаем P
+        P = new float[V+1];
+        float sum = 0;
+        double factorialX = 1;
+        for (int x = 0; x <= V; x++) {
+            if (x >= 2) factorialX *= x;
+            P[x] = (float) (Math.pow(ro, x)/factorialX);
+            sum += P[x];
+        }
+        for (int k = 0; k <= V; k++) {
+            P[k] = P[k]/sum;
+        }
     
+        // Считаем Pt
+        Pt = P[V];
+        
+        // Считаем k_
+        k_ = 0;
+        for (int i = 1; i <= V; i++) {
+            k_ += i * P[i];
+        }
+    
+        // Считаем t_
+        t_ = k_ /lambda;
     }
 }

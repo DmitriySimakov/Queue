@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.models.ModelAB;
+import com.dmitry_simakov.queue.models.Model;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
@@ -28,7 +28,7 @@ public class ModelDescriptionFragment extends Fragment {
             id = bundle.getInt(ModelActivity.MODEL_ID);
         }
         
-        ModelAB model = MODELS[id];
+        Model model = MODELS[id];
     
         ImageView modelImageView = v.findViewById(R.id.modelImageView);
         modelImageView.setImageResource(model.getModelImage());

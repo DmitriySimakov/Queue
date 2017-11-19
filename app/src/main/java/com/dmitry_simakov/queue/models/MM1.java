@@ -2,7 +2,7 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public class MM1 extends ModelAB {
+public class MM1 extends Model {
     
     public MM1() {
         name = "M/M/1";
@@ -10,8 +10,8 @@ public class MM1 extends ModelAB {
         modelImage = R.drawable.m_m_1__1;
         BDPImage = R.drawable.m_m_1__2;
         
-        kFormula = R.drawable.mm1_k;
-        tFormula = R.drawable.mm1_t;
+        k_Formula = R.drawable.mm1_k;
+        t_Formula = R.drawable.mm1_t;
         pFormula = R.drawable.mm1_p;
     }
     
@@ -25,16 +25,16 @@ public class MM1 extends ModelAB {
     
     @Override
     public void calculate() {
-        // Считаем k
-        k = ro/(1-ro);
-        
-        // Считаем t
-        t = (1/mu)/(1 - ro);
-        
         // Считаем P
         P = new float[11];
         for (int k = 0; k <= 10; k++) {
             P[k] = (1 - ro) * (float) Math.pow(ro, k);
         }
+        
+        // Считаем k_
+        k_ = ro/(1-ro);
+    
+        // Считаем t_
+        t_ = (1/mu)/(1 - ro);
     }
 }

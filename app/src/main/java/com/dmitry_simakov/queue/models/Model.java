@@ -2,7 +2,7 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-public abstract class ModelAB {
+public abstract class Model {
     
     protected String name = "Model Name";
     
@@ -13,12 +13,12 @@ public abstract class ModelAB {
     protected float mu;
     protected float ro = -1;
     
-    protected float k;
-    protected float t;
+    protected float k_;
+    protected float t_;
     protected float P[];
     
-    protected int kFormula = R.drawable.empty_image;
-    protected int tFormula = R.drawable.empty_image;
+    protected int k_Formula = R.drawable.empty_image;
+    protected int t_Formula = R.drawable.empty_image;
     protected int pFormula = R.drawable.empty_image;
     
     public String setValues(float lambda, float mu) {
@@ -36,11 +36,11 @@ public abstract class ModelAB {
     
     public int getBDPImage() { return BDPImage; }
     
-    public float getK() { return k; }
-    public int getKFormula() { return kFormula; }
+    public float getK_() { return k_; }
+    public int getK_Formula() { return k_Formula; }
     
-    public float getT() { return t; }
-    public int getTFormula() { return tFormula; }
+    public float getT_() { return t_; }
+    public int getT_Formula() { return t_Formula; }
     
     public float[] getP() { return  P; }
     public int getPFormula() { return pFormula; }

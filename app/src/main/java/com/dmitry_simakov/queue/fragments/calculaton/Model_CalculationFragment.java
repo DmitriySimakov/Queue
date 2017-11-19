@@ -1,4 +1,4 @@
-package com.dmitry_simakov.queue.fragments;
+package com.dmitry_simakov.queue.fragments.calculaton;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,14 +16,15 @@ import android.widget.Toast;
 
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.models.ModelAB;
+import com.dmitry_simakov.queue.fragments.BarGraphFragment;
+import com.dmitry_simakov.queue.models.Model;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
-public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnClickListener {
+public class Model_CalculationFragment extends Fragment implements View.OnClickListener {
     
     protected int id;
-    private ModelAB model;
+    private Model model;
     
     protected float lambda;
     protected EditText lambda_EditText;
@@ -50,7 +51,7 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: onCreate");
+        Log.d("LOG", "Model_CalculationFragment: onCreate");
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             getSavedInstanceStates(savedInstanceState);
@@ -69,7 +70,7 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: onCreateView");
+        Log.d("LOG", "Model_CalculationFragment: onCreateView");
         final View v = inflater.inflate(R.layout.fragment_model_calc, container, false);
     
         // Получаем модель по id
@@ -84,10 +85,8 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
         findViews(v);
         
         // Устанавливаю сохранённые значния полей ввода
-        if (savedInstanceState != null) {
-            fillHints();
-            fillETs();
-        }
+        refreshText(savedInstanceState != null);
+        
         createGraphFragment();
         
         return v;
@@ -106,26 +105,32 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
         k_TextView = v.findViewById(R.id.k_TextView);
     }
     
-    protected void fillHints() {
-        lambda_EditText.setHint("λ = " + lambda);
-        mu_EditText.setHint("μ = " + mu);
-    }
+    protected void refreshText(boolean b) {
+        if (b) {
+            lambda_EditText.setHint("λ = " + lambda);
+            mu_EditText.setHint("μ = " + mu);
     
-    protected void fillETs() {
-        k_TextView.setText("k = " + k);
-        t_TextView.setText("t = " + t);
+            k_TextView.setText("k_ = " + k);
+            t_TextView.setText("t_ = " + t);
+        } else {
+            lambda_EditText.setHint("λ");
+            mu_EditText.setHint("μ");
+    
+            k_TextView.setText("k_");
+            t_TextView.setText("t_");
+        }
     }
     
     @Override
     public void onPause() {
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: onPause");
+        Log.d("LOG", "Model_CalculationFragment: onPause");
         super.onPause();
         toast.cancel();
     }
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: onSaveInstanceState");
+        Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
         saveInstanceStates(savedInstanceState);
     }
     
@@ -140,7 +145,7 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
     
     @Override
     public void onClick(View view) {
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: onClick");
+        Log.d("LOG", "Model_CalculationFragment: onClick");
         String lambdaStr = lambda_EditText.getText().toString();
         String muStr = mu_EditText.getText().toString();
         
@@ -181,16 +186,11 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
         imm.hideSoftInputFromWindow(OK_Button.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         
         // Показать введённые данные
-        lambda_EditText.setHint("λ = " + lambda);
-        mu_EditText.setHint("μ = " + mu);
+        k = model.getK_();
+        t = model.getT_();
+        refreshText(true);
         
-        k = model.getK();
-        k_TextView.setText("k = " + k);
-        
-        t = model.getT();
-        t_TextView.setText("t = " + t);
-        
-        P_Values = model.getP();
+        getP_Values();
         createGraphFragment();
         
         lambda_EditText.clearFocus();
@@ -203,19 +203,20 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
         editText.requestFocus();
     }
     
+    protected void getP_Values() {
+        Log.d("LOG", "Model_CalculationFragment: getP_Values");
+        P_Values = model.getP();
+    }
+    
     protected void createGraphFragment() {
-        Log.d("LOG", "MM1_MMinf_CalculationFragment: createGraphFragment");
+        Log.d("LOG", "Model_CalculationFragment: createGraphFragment");
         FragmentManager myFragmentManager = getFragmentManager();
         Fragment fragment = null;
         Bundle args = new Bundle();
-        prepareArgs(args);
+        args.putFloatArray(P_VALUES, P_Values);
         //switch (/* Settings choice */) {
         //    case R.id.bar_graph:
-        if (args.size() == 2) {
-            fragment = new DoubleBarGraphFragment();
-        } else {
             fragment = new BarGraphFragment();
-        }
         //        break;
         //    case R.id.graph:
         //        fragment = new LineGraphFragment();
@@ -224,9 +225,5 @@ public class MM1_MMinf_CalculationFragment extends Fragment implements View.OnCl
     
         fragment.setArguments(args);
         myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();
-    }
-    
-    protected void prepareArgs(Bundle args) {
-        args.putFloatArray(P_VALUES, P_Values);
     }
 }
