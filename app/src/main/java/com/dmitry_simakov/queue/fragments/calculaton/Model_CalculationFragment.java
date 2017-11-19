@@ -47,6 +47,9 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected float[] P_Values = new float[11];
     public static final String P_VALUES = "P_VALUES";
     
+    protected boolean wasCalculated = false;
+    public static final String WAS_CALCULATED = "WAS_CALCULATED";
+    
     protected Toast toast = null;
     
     @Override
@@ -59,8 +62,11 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     }
     
     protected void getSavedInstanceStates(Bundle savedInstanceState) {
+        wasCalculated = savedInstanceState.getBoolean(WAS_CALCULATED);
+        
         lambda = savedInstanceState.getFloat(LAMBDA_VALUE);
         mu = savedInstanceState.getFloat(MU_VALUE);
+        
         k = savedInstanceState.getFloat(K_VALUE);
         t = savedInstanceState.getFloat(T_VALUE);
         P_Values = savedInstanceState.getFloatArray(P_VALUES);
@@ -85,7 +91,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         findViews(v);
         
         // Устанавливаю сохранённые значния полей ввода
-        refreshText(savedInstanceState != null);
+        refreshText(wasCalculated);
         
         createGraphFragment();
         
@@ -131,6 +137,8 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
+        savedInstanceState.putBoolean(WAS_CALCULATED, wasCalculated);
+        
         savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
         savedInstanceState.putFloat(MU_VALUE, mu);
     
@@ -176,6 +184,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
             return;
         }
         model.calculate();
+        wasCalculated = true;
         
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

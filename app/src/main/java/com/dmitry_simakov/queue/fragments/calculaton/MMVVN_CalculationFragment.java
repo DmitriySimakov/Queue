@@ -129,6 +129,7 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
             return;
         }
         m.calculate();
+        wasCalculated = true;
     
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -135,7 +135,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/element_margin"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:text="P[k]"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

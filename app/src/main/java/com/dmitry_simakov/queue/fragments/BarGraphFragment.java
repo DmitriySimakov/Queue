@@ -1,5 +1,6 @@
 package com.dmitry_simakov.queue.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,13 +14,17 @@ import android.widget.TextView;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +78,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         
         // настройки осей
         chart.getAxisRight().setEnabled(false);
-        
+    
         chart.setOnChartValueSelectedListener(this);
     
         XAxis xAxis = chart.getXAxis();
@@ -131,6 +136,6 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     @Override
     public void onNothingSelected() {
-        P_TextView.setText("");
+        P_TextView.setText("P[k]");
     }
 }
