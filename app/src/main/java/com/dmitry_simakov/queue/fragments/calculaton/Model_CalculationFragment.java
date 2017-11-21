@@ -167,7 +167,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
                 ImageViewDialog.createDialog(model.getT_Formula(), getActivity());
                 break;
             case R.id.Pk_TextView:
-                ImageViewDialog.createDialog(model.getP_Formula(), getActivity());
+                ImageViewDialog.createDialog(model.getPk_Formula(), getActivity());
                 break;
         }
     }

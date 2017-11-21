@@ -10,10 +10,10 @@ public class MMV extends Model_V {
         modelImage = R.drawable.empty_image;
         BDPImage = R.drawable.empty_image;
     
-        k_Formula = R.drawable.empty_image;
-        t_Formula = R.drawable.empty_image;
-        PtFormula = R.drawable.empty_image;
-        pFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.mmv_gamma;
+        t_Formula = R.drawable.mmv_j;
+        Pt_Formula = R.drawable.mmv_pt;
+        Pk_Formula = R.drawable.mmv_pk;
     }
     
     public String setValues(double lambda, double mu, int V) {

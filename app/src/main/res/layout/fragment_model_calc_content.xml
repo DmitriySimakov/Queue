@@ -96,7 +96,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/t_TextView"
+                android:id="@+id/k_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -104,7 +104,7 @@
                 android:gravity="center_vertical"/>
 
             <TextView
-                android:id="@+id/k_TextView"
+                android:id="@+id/t_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

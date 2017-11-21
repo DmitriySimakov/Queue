@@ -14,7 +14,7 @@ public abstract class Model {
     protected double ro = -1;
     
     protected double P[];
-    protected int pFormula = R.drawable.empty_image;
+    protected int Pk_Formula = R.drawable.empty_image;
     
     protected double k_;
     protected int k_Formula = R.drawable.empty_image;
@@ -38,7 +38,7 @@ public abstract class Model {
     public int getBDPImage() { return BDPImage; }
     
     public double[] getP() { return  P; }
-    public int getP_Formula() { return pFormula; }
+    public int getPk_Formula() { return Pk_Formula; }
     
     public double getK_() { return k_; }
     public int getK_Formula() { return k_Formula; }

@@ -10,9 +10,9 @@ public class MMinf extends Model {
         modelImage = R.drawable.m_m_inf__1;
         BDPImage = R.drawable.m_m_inf__2;
     
-        k_Formula = R.drawable.empty_image;
-        t_Formula = R.drawable.empty_image;
-        pFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.mminf_k;
+        t_Formula = R.drawable.mminf_t;
+        Pk_Formula = R.drawable.mminf_pk;
     }
     
     @Override

@@ -2,9 +2,6 @@ package com.dmitry_simakov.queue.models;
 
 import com.dmitry_simakov.queue.R;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 public class MMVVN extends Model_V {
     
     private int N;
@@ -13,7 +10,7 @@ public class MMVVN extends Model_V {
     private double A;
     
     private double Pb;
-    private int PbFormula = R.drawable.empty_image;
+    private int PbFormula;
     
     public MMVVN() {
         name = "M/M/V/V/N";
@@ -21,10 +18,11 @@ public class MMVVN extends Model_V {
         modelImage = R.drawable.empty_image;
         BDPImage = R.drawable.empty_image;
     
-        k_Formula = R.drawable.empty_image;
-        t_Formula = R.drawable.empty_image;
-        PtFormula = R.drawable.empty_image;
-        pFormula = R.drawable.empty_image;
+        k_Formula = R.drawable.mmvvn_k;
+        t_Formula = R.drawable.mmvvn_t;
+        Pt_Formula = R.drawable.mmvvn_pt;
+        PbFormula = R.drawable.mmvvn_pb;
+        Pk_Formula = R.drawable.mmvvn_pk;
     }
     
     public String setValues(double A, double mu, int V, int N) {

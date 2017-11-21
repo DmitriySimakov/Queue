@@ -30,11 +30,11 @@ public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     protected void refreshText(boolean b) {
         super.refreshText(b);
         if (b) {
-            k_TextView.setText("γ = " + k);
-            t_TextView.setText("j = " + t);
+            k_TextView.setText("γ_ = " + k);
+            t_TextView.setText("j_ = " + t);
         } else {
-            k_TextView.setText("γ");
-            t_TextView.setText("j");
+            k_TextView.setText("γ_");
+            t_TextView.setText("j_");
         }
     }
     

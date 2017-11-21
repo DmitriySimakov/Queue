@@ -7,7 +7,7 @@ public abstract class Model_V extends Model {
     protected int V;
     
     protected double Pt;
-    protected int PtFormula = R.drawable.empty_image;
+    protected int Pt_Formula = R.drawable.empty_image;
     
     public String setValues(double lambda, double mu, int V) {
         super.setValues(lambda, mu);
@@ -16,5 +16,5 @@ public abstract class Model_V extends Model {
     }
     
     public double getPt() { return  Pt; };
-    public int getPt_Formula() { return PtFormula; }
+    public int getPt_Formula() { return Pt_Formula; }
 }
