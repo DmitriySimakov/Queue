@@ -20,7 +20,7 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
     protected EditText V_EditText;
     public static final String V_VALUE = "V_VALUE";
     
-    protected float Pt;
+    protected double Pt;
     protected TextView Pt_TextView;
     public static final String Pt_VALUE = "Pt_VALUE";
     
@@ -41,7 +41,7 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt(V_VALUE, V);
-        savedInstanceState.putFloat(Pt_VALUE, Pt);
+        savedInstanceState.putDouble(Pt_VALUE, Pt);
     }
     
     @Override
@@ -88,13 +88,13 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
         }
         
         try {
-            lambda = Float.parseFloat(lambdaStr);
+            lambda = Double.parseDouble(lambdaStr);
         } catch (Exception e) {
             invalidInput("Некорректный ввод", lambda_EditText);
             return;
         }
         try {
-            mu = Float.parseFloat(muStr);
+            mu = Double.parseDouble(muStr);
         } catch (Exception e) {
             invalidInput("Некорректный ввод", mu_EditText);
             return;

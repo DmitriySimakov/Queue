@@ -33,7 +33,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     protected BarChart chart;
     
-    protected float[] y1_Values;
+    protected double[] y1_Values;
     
     protected TextView P_TextView;
     
@@ -92,7 +92,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
     protected void getBundle(Bundle bundle) {
         Log.d("LOG", "BarGraphFragment: getBundle");
-        y1_Values = bundle.getFloatArray(Model_CalculationFragment.P_VALUES);
+        y1_Values = bundle.getDoubleArray(Model_CalculationFragment.P_VALUES);
     }
     
     protected void prepareData(BarData data) {
@@ -105,7 +105,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < y1_Values.length; i++) {
-            entries.add(new BarEntry(i, y1_Values[i]));
+            entries.add(new BarEntry(i, (float) y1_Values[i]));
         }
         BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
     

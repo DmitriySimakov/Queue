@@ -21,8 +21,8 @@ import java.util.List;
 public class LineGraphFragment extends Fragment {
     
     private LineChart chart;
-    private float[] XValues;
-    private float[] YValues;
+    private double[] XValues;
+    private double[] YValues;
     
     @Override
     public View onCreateView(
@@ -31,8 +31,8 @@ public class LineGraphFragment extends Fragment {
         
         Bundle bundle = getArguments();
         if (bundle != null) {
-            XValues = bundle.getFloatArray("XValues");
-            YValues = bundle.getFloatArray("YValues");
+            XValues = bundle.getDoubleArray("XValues");
+            YValues = bundle.getDoubleArray("YValues");
         }
         
         chart = new LineChart(getActivity());
@@ -43,7 +43,7 @@ public class LineGraphFragment extends Fragment {
         
         List<Entry> entries = new ArrayList<Entry>();
         for (int i = 0; i < XValues.length; i++) {
-            entries.add(new Entry(XValues[i], YValues[i]));
+            entries.add(new Entry((float) XValues[i], (float) YValues[i]));
         }
         
         LineDataSet dataSet = new LineDataSet(entries, "График чего-то там");

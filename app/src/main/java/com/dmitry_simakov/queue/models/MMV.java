@@ -16,7 +16,7 @@ public class MMV extends Model_V {
         pFormula = R.drawable.empty_image;
     }
     
-    public String setValues(float lambda, float mu, int V) {
+    public String setValues(double lambda, double mu, int V) {
         if (lambda / (V * mu) < 1) {
             return super.setValues(lambda, mu, V);
         }
@@ -25,38 +25,49 @@ public class MMV extends Model_V {
     
     @Override
     public void calculate() {
+        P = new double[V + 6];
+        
         // Считаем промежуточные значения
-        P = new float[V + 6];
-        float roI = 1;
-        float factorial_i = 1;
-        double sum = 0;
-        for (int i = 0; i < V; i++) {
-            if (i >= 2) factorial_i *= i;
-            P[i] = roI/factorial_i; // считаю числитель и записываю в массив
-            sum += P[i]; // считаю сумму
-            roI *= ro; // Возвожу ро в следующую степень
+        double RO_pow_X = 1; // ro^0
+        int X_factorial = 1; // 0!
+        P[0] = 1; // Считаю числитель P[0]
+        double sum = 1; // (ro^0) / 0! = 1
+        
+        for (int x = 1; x <= V - 1; x++) {
+            RO_pow_X *= ro;
+            X_factorial *= x;
+    
+            P[x] = RO_pow_X / X_factorial; // Считаю числитель и записываю в массив
+            sum += P[x]; // Считаю сумму из знаменателя
         }
-        P[V] = roI/(factorial_i * V);
-        double part1 = P[V] * V/(V-ro);
-        double denominator = sum + part1;
+        // Считаю значение в последней точке
+        RO_pow_X *= ro;
+        X_factorial *= V;
+        P[V] = RO_pow_X / X_factorial;
+        
+        double part2 = P[V] * V/(V-ro); // Считаю вторую часть знаменателя
+        double denominator = sum + part2;
     
         // Считаем P
         // Левая часть графика
         for (int k = 0; k <= V; k++) {
-            P[k] = (float) (P[k] / denominator);
+            P[k] = P[k] / denominator;
         }
         // Правая часть графика
-        float part2 = ro/V;
-        for (int k = V + 1; k < P.length; k++) {
-            P[k] = P[V] * part2;
-            part2 *= part2;
+        double RO_div_V = ro / V;
+        double RO_div_V_pow_J = 1; // (ro / V)^0
+        
+        for (int j = 1; j <= 5; j++) {
+            RO_div_V_pow_J *= RO_div_V;
+            
+            P[V + j] = P[V] * RO_div_V_pow_J;
         }
         
         // Считаем Pt
-        Pt = (float) (part1/denominator);
+        Pt = part2 / denominator;
     
         // Считаем γ_
-        k_ = 1/(mu * (V - ro));
+        k_ = 1 / (mu * (V - ro));
     
         // Считаем j_
         t_ = lambda * k_;

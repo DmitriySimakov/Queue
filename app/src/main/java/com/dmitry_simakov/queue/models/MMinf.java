@@ -17,18 +17,24 @@ public class MMinf extends Model {
     
     @Override
     public void calculate() {
+        P = new double[11];
+    
+        // Считаем P
+        double RO_pow_K = 1; // ro^0
+        int K_factorial = 1; // 0!
+        P[0] = Math.exp(-ro); // Считаю P[0]
+        
+        for (int k = 1; k <= 10; k++) {
+            RO_pow_K *= ro;
+            K_factorial *= k;
+            
+            P[k] = RO_pow_K / K_factorial * Math.exp(-ro);
+        }
+        
         // Считаем k_
         k_ = lambda/mu;
     
         // Считаем t_
         t_ = 1/mu;
-    
-        // Считаем P
-        P = new float[11];
-        int factorialK = 1; // 10! = 3628800, max int = 2147483647
-        for (int k = 0; k <= 10; k++) {
-            if (k >= 2) factorialK *= k;
-            P[k] = (float) (Math.pow(ro, k)/factorialK * Math.exp(-ro));
-        }
     }
 }

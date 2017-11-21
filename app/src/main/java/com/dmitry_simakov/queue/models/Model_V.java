@@ -6,16 +6,15 @@ public abstract class Model_V extends Model {
     
     protected int V;
     
-    protected float Pt;
+    protected double Pt;
     protected int PtFormula = R.drawable.empty_image;
     
-    public String setValues(float lambda, float mu, int V) {
+    public String setValues(double lambda, double mu, int V) {
         super.setValues(lambda, mu);
         this.V = V;
-        ro = ro / V;
         return null;
     }
     
-    public float getPt() { return  Pt; };
+    public double getPt() { return  Pt; };
     public int getPtFormula() { return PtFormula; }
 }

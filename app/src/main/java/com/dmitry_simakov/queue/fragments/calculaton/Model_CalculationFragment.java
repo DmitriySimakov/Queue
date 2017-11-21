@@ -26,25 +26,25 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected int id;
     protected Model model;
     
-    protected float lambda;
+    protected double lambda;
     protected EditText lambda_EditText;
     public static final String LAMBDA_VALUE = "LAMBDA_VALUE";
     
-    protected float mu;
+    protected double mu;
     protected EditText mu_EditText;
     public static final String MU_VALUE = "MU_VALUE";
     
     protected Button OK_Button;
     
-    protected float k;
+    protected double k;
     protected TextView k_TextView;
     public static final String K_VALUE = "K_VALUE";
     
-    protected float t;
+    protected double t;
     protected TextView t_TextView;
     public static final String T_VALUE = "T_VALUE";
     
-    protected float[] P_Values = new float[11];
+    protected double[] P_Values = new double[11];
     public static final String P_VALUES = "P_VALUES";
     
     protected boolean wasCalculated = false;
@@ -64,12 +64,12 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected void getSavedInstanceStates(Bundle savedInstanceState) {
         wasCalculated = savedInstanceState.getBoolean(WAS_CALCULATED);
         
-        lambda = savedInstanceState.getFloat(LAMBDA_VALUE);
-        mu = savedInstanceState.getFloat(MU_VALUE);
+        lambda = savedInstanceState.getDouble(LAMBDA_VALUE);
+        mu = savedInstanceState.getDouble(MU_VALUE);
         
-        k = savedInstanceState.getFloat(K_VALUE);
-        t = savedInstanceState.getFloat(T_VALUE);
-        P_Values = savedInstanceState.getFloatArray(P_VALUES);
+        k = savedInstanceState.getDouble(K_VALUE);
+        t = savedInstanceState.getDouble(T_VALUE);
+        P_Values = savedInstanceState.getDoubleArray(P_VALUES);
     }
     
     @Override
@@ -139,12 +139,12 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
         savedInstanceState.putBoolean(WAS_CALCULATED, wasCalculated);
         
-        savedInstanceState.putFloat(LAMBDA_VALUE, lambda);
-        savedInstanceState.putFloat(MU_VALUE, mu);
+        savedInstanceState.putDouble(LAMBDA_VALUE, lambda);
+        savedInstanceState.putDouble(MU_VALUE, mu);
     
-        savedInstanceState.putFloat(K_VALUE, k);
-        savedInstanceState.putFloat(T_VALUE, t);
-        savedInstanceState.putFloatArray(P_VALUES, P_Values);
+        savedInstanceState.putDouble(K_VALUE, k);
+        savedInstanceState.putDouble(T_VALUE, t);
+        savedInstanceState.putDoubleArray(P_VALUES, P_Values);
     }
     
     @Override
@@ -163,13 +163,13 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         }
         
         try {
-            lambda = Float.parseFloat(lambdaStr);
+            lambda = Double.parseDouble(lambdaStr);
         } catch (Exception e) {
             invalidInput("Некорректный ввод", lambda_EditText);
             return;
         }
         try {
-            mu = Float.parseFloat(muStr);
+            mu = Double.parseDouble(muStr);
         } catch (Exception e) {
             invalidInput("Некорректный ввод", mu_EditText);
             return;
@@ -218,7 +218,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         FragmentManager myFragmentManager = getFragmentManager();
         Fragment fragment = null;
         Bundle args = new Bundle();
-        args.putFloatArray(P_VALUES, P_Values);
+        args.putDoubleArray(P_VALUES, P_Values);
         //switch (/* Settings choice */) {
         //    case R.id.bar_graph:
             fragment = new BarGraphFragment();

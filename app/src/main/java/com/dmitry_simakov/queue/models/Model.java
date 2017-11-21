@@ -9,19 +9,20 @@ public abstract class Model {
     protected int modelImage = R.drawable.empty_image;
     protected int BDPImage = R.drawable.empty_image; // Birth–death process scheme
     
-    protected float lambda;
-    protected float mu;
-    protected float ro = -1;
+    protected double lambda;
+    protected double mu;
+    protected double ro = -1;
     
-    protected float k_;
-    protected float t_;
-    protected float P[];
-    
-    protected int k_Formula = R.drawable.empty_image;
-    protected int t_Formula = R.drawable.empty_image;
+    protected double P[];
     protected int pFormula = R.drawable.empty_image;
     
-    public String setValues(float lambda, float mu) {
+    protected double k_;
+    protected int k_Formula = R.drawable.empty_image;
+    
+    protected double t_;
+    protected int t_Formula = R.drawable.empty_image;
+    
+    public String setValues(double lambda, double mu) {
         this.lambda = lambda;
         this.mu = mu;
         ro = lambda / mu;
@@ -36,12 +37,12 @@ public abstract class Model {
     
     public int getBDPImage() { return BDPImage; }
     
-    public float getK_() { return k_; }
+    public double[] getP() { return  P; }
+    public int getPFormula() { return pFormula; }
+    
+    public double getK_() { return k_; }
     public int getK_Formula() { return k_Formula; }
     
-    public float getT_() { return t_; }
+    public double getT_() { return t_; }
     public int getT_Formula() { return t_Formula; }
-    
-    public float[] getP() { return  P; }
-    public int getPFormula() { return pFormula; }
 }

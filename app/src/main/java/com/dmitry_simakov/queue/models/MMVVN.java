@@ -9,11 +9,11 @@ public class MMVVN extends Model_V {
     
     private int N;
     
-    private float alfa;
-    private float A;
+    private double alfa;
+    private double A;
     
-    private float Pb;
-    private float PbFormula = R.drawable.empty_image;
+    private double Pb;
+    private double PbFormula = R.drawable.empty_image;
     
     public MMVVN() {
         name = "M/M/V/V/N";
@@ -27,62 +27,53 @@ public class MMVVN extends Model_V {
         pFormula = R.drawable.empty_image;
     }
     
-    public String setValues(float A, float mu, int V, int N) {
+    public String setValues(double A, double mu, int V, int N) {
         if (A >= 1) return "A должно быть < 1";
-        if (((N - V) * A)/(V * mu) < 1) {
+        alfa = (A * mu) / (1 - A);
+        if (((N - V) * alfa) / (V * mu) < 1) {
             this.A = A;
             this.mu = mu;
             this.V = V;
             this.N = N;
-            alfa = (A * mu)/(1 - A);
             return null;
         }
-        return "Должно выполняться: ((N - V) • A)/(V • μ) < 1";
+        return "Должно выполняться: ((N - V) • α)/(V • μ) < 1";
     }
     
     @Override
     public void calculate() {
+        P = new double[V + 1];
+        double n = N; // Чтобы не кастовать
+    
         // Считаем промежуточные значения
-        P = new float[V + 1];
-        float n = N;
-        float drob = A/(1-A);
-        BigDecimal drobK = BigDecimal.valueOf(1); // дробь в степени 0
-        BigDecimal sochet = BigDecimal.valueOf(1); // Сочетание из N по 0
-        BigDecimal num = sochet.multiply(drobK);
-        BigDecimal sum1 = BigDecimal.valueOf(0);
-        BigDecimal sum2 = BigDecimal.valueOf(0);
+        long combination = 1; // Сочетание из N по 0
+        double part = A/(1-A);
+        double PART_pow_X = 1; // дробь в степени 0
+        P[0] = 1; // Считаю числитель P[0]
+        double sum1 = P[0];
+        double sum2 = P[0];
         
-        for (int x = 0; x < V; x++) {
-            sum1 = sum1.add(num);
-            sum2 = sum2.add(num.multiply(BigDecimal.valueOf((n - x)/n))).setScale(10, BigDecimal.ROUND_HALF_UP);; // C(N-1)(k) = C(N)(k) * (N-k)/N
+        for (int x = 1; x <= V; x++) {
+            combination *= (n - x + 1) / x; // C(N)(k) = C(N)(k) * (N-k+1)/k
+            PART_pow_X *= part;
             
-            sochet = sochet.multiply(BigDecimal.valueOf((n - x)/(x + 1))).setScale(10, BigDecimal.ROUND_HALF_UP); // C(N)(k+1) = C(N)(k) * (N-k)/(k+1)
-            drobK = drobK.multiply(BigDecimal.valueOf(drob)).setScale(10, BigDecimal.ROUND_HALF_UP); // возвожу дробь в следущую степень
-            num = sochet.multiply(drobK).setScale(10, BigDecimal.ROUND_HALF_UP);
+            P[x] = combination * PART_pow_X;
+            sum1 += P[x];
+            sum2 += P[x] * (n - x) / n; // C(N-1)(k) = C(N)(k) * (N-k)/N
         }
-        // Считаю значения в последней точке
-        sum1 = sum1.add(num);
-        num = num.multiply(BigDecimal.valueOf((n - V)/n));
-        sum2 = sum2.add(num);
     
         // Считаем Pb
-        Pb = num.divide(sum2, 6, BigDecimal.ROUND_HALF_UP).floatValue();
+        Pb = (P[V] * (n - V) / n) / sum2;
     
         // Считаем P и k_
-        sochet = BigDecimal.valueOf(1); // Сочетание из N по 0
-        drobK = BigDecimal.valueOf(1); // дробь в степени 0
+        combination = 1; // Сочетание из N по 0
+        PART_pow_X = 1; // дробь в степени 0
         k_ = 0;
-        BigDecimal res;
-        for (int k = 0; k < V; k++) {
-            P[k] = sochet.divide(sum1, 6, BigDecimal.ROUND_HALF_UP).multiply(drobK).setScale(6, BigDecimal.ROUND_HALF_UP).floatValue();
+        
+        for (int k = 0; k <= V; k++) {
+            P[k] /= sum1;
             k_ += k * P[k];
-            
-            sochet = sochet.multiply(BigDecimal.valueOf((n - k)/(k + 1))).setScale(10, BigDecimal.ROUND_HALF_UP); // C(N)(k+1) = C(N)(k) * (N-k)/(k+1)
-            drobK = drobK.multiply(BigDecimal.valueOf(drob)).setScale(10, BigDecimal.ROUND_HALF_UP); // возвожу дробь в следущую степень
         }
-        // Считаю значения в последней точке
-        P[V] = sochet.divide(sum1, 6, BigDecimal.ROUND_HALF_UP).multiply(drobK).setScale(6, BigDecimal.ROUND_HALF_UP).floatValue();
-        k_ += V * P[V];
     
         // Считаем Pt
         Pt = P[V];
@@ -91,11 +82,11 @@ public class MMVVN extends Model_V {
         t_ = k_ / ((n - k_) * alfa);
     }
     
-    public float getPb() {
+    public double getPb() {
         return Pb;
     }
     
-    public float getPbFormula() {
+    public double getPbFormula() {
         return PbFormula;
     }
 }

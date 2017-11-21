@@ -16,14 +16,14 @@ import java.util.List;
 
 public class DoubleBarGraphFragment extends BarGraphFragment {
     
-    private float[] y2_Values;
+    private double[] y2_Values;
     
     protected TextView W_TextView;
     
     @Override
     protected void getBundle(Bundle bundle) {
         super.getBundle(bundle);
-        y2_Values = bundle.getFloatArray(MMV_CalculationFragment.W_VALUES);
+        y2_Values = bundle.getDoubleArray(MMV_CalculationFragment.W_VALUES);
     }
     
     @Override
@@ -38,7 +38,7 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
     
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < y2_Values.length; i++) {
-            entries.add(new BarEntry(i + y1_Values.length, y2_Values[i]));
+            entries.add(new BarEntry(i + y1_Values.length, (float) y2_Values[i]));
         }
         BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
     
