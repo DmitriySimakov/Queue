@@ -7,8 +7,10 @@ public class MM1 extends Model {
     public MM1() {
         name = "M/M/1";
         
-        modelImage = R.drawable.m_m_1__1;
-        BDPImage = R.drawable.m_m_1__2;
+        modelImage = R.drawable.mm1_model;
+        modelImageHD = R.drawable.mm1_model_hd;
+        BDPImage = R.drawable.mm1_bdp;
+        BDPImageHD = R.drawable.mm1_bdp_hd;
         
         k_Formula = R.drawable.mm1_k;
         t_Formula = R.drawable.mm1_t;

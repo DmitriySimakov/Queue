@@ -15,8 +15,10 @@ public class MMVVN extends Model_V {
     public MMVVN() {
         name = "M/M/V/V/N";
         
-        modelImage = R.drawable.empty_image;
-        BDPImage = R.drawable.empty_image;
+        modelImage = R.drawable.mmvvn_model;
+        modelImageHD = R.drawable.mmvvn_model_hd;
+        BDPImage = R.drawable.mmvvn_bdp;
+        BDPImageHD = R.drawable.mmvvn_bdp_hd;
     
         k_Formula = R.drawable.mmvvn_k;
         t_Formula = R.drawable.mmvvn_t;

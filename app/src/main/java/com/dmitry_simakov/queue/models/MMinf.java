@@ -7,8 +7,10 @@ public class MMinf extends Model {
     public MMinf() {
         name = "M/M/∞";
         
-        modelImage = R.drawable.m_m_inf__1;
-        BDPImage = R.drawable.m_m_inf__2;
+        modelImage = R.drawable.mminf_model;
+        modelImageHD = R.drawable.mminf_model_hd;
+        BDPImage = R.drawable.mminf_bdp;
+        BDPImageHD = R.drawable.mminf_bdp_hd;
     
         k_Formula = R.drawable.mminf_k;
         t_Formula = R.drawable.mminf_t;

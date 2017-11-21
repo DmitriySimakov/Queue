@@ -57,10 +57,10 @@ public class ModelDescriptionFragment extends Fragment implements View.OnClickLi
         Log.d("LOG", "ModelDescriptionFragment: onClick");
         switch (view.getId()) {
             case R.id.modelImageView:
-                ImageViewDialog.createDialog(model.getModelImage(), getActivity());
+                ImageViewDialog.createDialog(model.getModelImageHD(), getActivity());
                 break;
             case R.id.BDPImageView:
-                ImageViewDialog.createDialog(model.getBDPImage(), getActivity());
+                ImageViewDialog.createDialog(model.getBDPImageHD(), getActivity());
                 break;
         }
     }

@@ -7,8 +7,10 @@ public class MMV extends Model_V {
     public MMV() {
         name = "M/M/V";
     
-        modelImage = R.drawable.empty_image;
-        BDPImage = R.drawable.empty_image;
+        modelImage = R.drawable.mmv_model;
+        modelImageHD = R.drawable.mmv_model_hd;
+        BDPImage = R.drawable.mmv_bdp;
+        BDPImageHD = R.drawable.mmv_bdp_hd;
     
         k_Formula = R.drawable.mmv_gamma;
         t_Formula = R.drawable.mmv_j;

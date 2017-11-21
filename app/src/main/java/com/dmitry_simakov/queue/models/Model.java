@@ -7,7 +7,9 @@ public abstract class Model {
     protected String name = "Model Name";
     
     protected int modelImage = R.drawable.empty_image;
+    protected int modelImageHD = R.drawable.empty_image;
     protected int BDPImage = R.drawable.empty_image; // Birth–death process scheme
+    protected int BDPImageHD = R.drawable.empty_image;
     
     protected double lambda;
     protected double mu;
@@ -34,8 +36,10 @@ public abstract class Model {
     public String getName() { return name; }
     
     public int getModelImage() { return modelImage; }
+    public int getModelImageHD() { return modelImageHD; }
     
     public int getBDPImage() { return BDPImage; }
+    public int getBDPImageHD() { return BDPImageHD; }
     
     public double[] getP() { return  P; }
     public int getPk_Formula() { return Pk_Formula; }
