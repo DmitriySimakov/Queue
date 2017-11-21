@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.BarGraphFragment;
@@ -107,8 +108,12 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         mu_EditText = v.findViewById(R.id.mu_EditText);
         OK_Button = v.findViewById(R.id.OK_Button);
         OK_Button.setOnClickListener(this);
-        t_TextView = v.findViewById(R.id.t_TextView);
         k_TextView = v.findViewById(R.id.k_TextView);
+        k_TextView.setOnClickListener(this);
+        t_TextView = v.findViewById(R.id.t_TextView);
+        t_TextView.setOnClickListener(this);
+        TextView P_TextView = v.findViewById(R.id.Pk_TextView);
+        P_TextView.setOnClickListener(this);
     }
     
     protected void refreshText(boolean b) {
@@ -150,9 +155,27 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         Log.d("LOG", "Model_CalculationFragment: onClick");
+        
+        switch (view.getId()) {
+            case R.id.OK_Button:
+                onButtonPressed();
+                break;
+            case R.id.k_TextView:
+                ImageViewDialog.createDialog(model.getK_Formula(), getActivity());
+                break;
+            case R.id.t_TextView:
+                ImageViewDialog.createDialog(model.getT_Formula(), getActivity());
+                break;
+            case R.id.Pk_TextView:
+                ImageViewDialog.createDialog(model.getP_Formula(), getActivity());
+                break;
+        }
+    }
+    
+    protected void onButtonPressed() {
         String lambdaStr = lambda_EditText.getText().toString();
         String muStr = mu_EditText.getText().toString();
-        
+    
         if (lambdaStr.trim().length() == 0) {
             invalidInput("Пожалуйста, введите λ", lambda_EditText);
             return;
@@ -161,7 +184,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
             invalidInput("Пожалуйста, введите μ", mu_EditText);
             return;
         }
-        
+    
         try {
             lambda = Double.parseDouble(lambdaStr);
         } catch (Exception e) {
@@ -174,10 +197,10 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
             invalidInput("Некорректный ввод", mu_EditText);
             return;
         }
-        
+    
         lambda_EditText.setText("");
         mu_EditText.setText("");
-        
+    
         String error = model.setValues(lambda, mu);
         if (error != null) {
             invalidInput(error, lambda_EditText);
@@ -185,19 +208,19 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         }
         model.calculate();
         wasCalculated = true;
-        
+    
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(OK_Button.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        
+    
         // Показать введённые данные
         k = model.getK_();
         t = model.getT_();
         refreshText(true);
-        
+    
         getP_Values();
         createGraphFragment();
-        
+    
         lambda_EditText.clearFocus();
         mu_EditText.clearFocus();
     }

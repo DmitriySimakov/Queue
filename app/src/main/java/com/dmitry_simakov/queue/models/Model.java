@@ -38,7 +38,7 @@ public abstract class Model {
     public int getBDPImage() { return BDPImage; }
     
     public double[] getP() { return  P; }
-    public int getPFormula() { return pFormula; }
+    public int getP_Formula() { return pFormula; }
     
     public double getK_() { return k_; }
     public int getK_Formula() { return k_Formula; }

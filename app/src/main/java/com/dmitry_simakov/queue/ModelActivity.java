@@ -116,7 +116,6 @@ public class ModelActivity extends AppCompatActivity {
                             mmvvnCalculationFragment.setArguments(args);
                             return mmvvnCalculationFragment;
                     }
-                    
             }
             return null;
         }

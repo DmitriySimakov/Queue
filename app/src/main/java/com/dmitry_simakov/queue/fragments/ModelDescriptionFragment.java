@@ -1,20 +1,31 @@
 package com.dmitry_simakov.queue.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.models.Model;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
-public class ModelDescriptionFragment extends Fragment {
+public class ModelDescriptionFragment extends Fragment implements View.OnClickListener {
+    
+    Model model;
+    
+    ImageView modelImageView;
+    ImageView BDPImageView;
+    
+    public static final String IMAGE = "IMAGE";
     
     @Override
     public View onCreateView(
@@ -28,14 +39,29 @@ public class ModelDescriptionFragment extends Fragment {
             id = bundle.getInt(ModelActivity.MODEL_ID);
         }
         
-        Model model = MODELS[id];
+        model = MODELS[id];
     
-        ImageView modelImageView = v.findViewById(R.id.modelImageView);
+        modelImageView = v.findViewById(R.id.modelImageView);
         modelImageView.setImageResource(model.getModelImage());
+        modelImageView.setOnClickListener(this);
     
-        ImageView RDDImageView = v.findViewById(R.id.BDPImageView);
-        RDDImageView.setImageResource(model.getBDPImage());
+        BDPImageView = v.findViewById(R.id.BDPImageView);
+        BDPImageView.setImageResource(model.getBDPImage());
+        BDPImageView.setOnClickListener(this);
         
         return v;
+    }
+    
+    @Override
+    public void onClick(View view) {
+        Log.d("LOG", "ModelDescriptionFragment: onClick");
+        switch (view.getId()) {
+            case R.id.modelImageView:
+                ImageViewDialog.createDialog(model.getModelImage(), getActivity());
+                break;
+            case R.id.BDPImageView:
+                ImageViewDialog.createDialog(model.getBDPImage(), getActivity());
+                break;
+        }
     }
 }

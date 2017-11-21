@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.calculaton.model_v.Model_V_CalculationFragment;
 import com.dmitry_simakov.queue.models.MMVVN;
@@ -49,6 +50,7 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
         N_EditText.setVisibility(View.VISIBLE);
         Pb_TextView = v.findViewById(R.id.Pb_TextView);
         Pb_TextView.setVisibility(View.VISIBLE);
+        Pb_TextView.setOnClickListener(this);
     }
     
     @Override
@@ -70,6 +72,17 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
     @Override
     public void onClick(View view) {
         Log.d("LOG", "MMVVN_CalculationFragment: onClick");
+        super.onClick(view);
+        
+        switch (view.getId()) {
+            case R.id.Pb_TextView:
+                ImageViewDialog.createDialog(((MMVVN)model).getPb_Formula(), getActivity());
+                break;
+        }
+    }
+    
+    @Override
+    protected void onButtonPressed() {
         String aStr = lambda_EditText.getText().toString();
         String muStr = mu_EditText.getText().toString();
         String vStr = V_EditText.getText().toString();

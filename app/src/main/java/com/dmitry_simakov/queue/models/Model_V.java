@@ -16,5 +16,5 @@ public abstract class Model_V extends Model {
     }
     
     public double getPt() { return  Pt; };
-    public int getPtFormula() { return PtFormula; }
+    public int getPt_Formula() { return PtFormula; }
 }

@@ -13,7 +13,7 @@ public class MMVVN extends Model_V {
     private double A;
     
     private double Pb;
-    private double PbFormula = R.drawable.empty_image;
+    private int PbFormula = R.drawable.empty_image;
     
     public MMVVN() {
         name = "M/M/V/V/N";
@@ -86,7 +86,7 @@ public class MMVVN extends Model_V {
         return Pb;
     }
     
-    public double getPbFormula() {
+    public int getPb_Formula() {
         return PbFormula;
     }
 }
