@@ -20,6 +20,7 @@ public class MMVVN extends Model_V {
         BDPImage = R.drawable.mmvvn_bdp;
         BDPImageHD = R.drawable.mmvvn_bdp_hd;
     
+        conditionImage = R.drawable.mmvvn_condition;
         k_Formula = R.drawable.mmvvn_k;
         t_Formula = R.drawable.mmvvn_t;
         Pt_Formula = R.drawable.mmvvn_pt;
@@ -27,17 +28,13 @@ public class MMVVN extends Model_V {
         Pk_Formula = R.drawable.mmvvn_pk;
     }
     
-    public String setValues(double A, double mu, int V, int N) {
-        if (A >= 1) return "A должно быть < 1";
+    public void setValues(double A, double mu, int V, int N) throws ConditionException {
         alfa = (A * mu) / (1 - A);
-        if (((N - V) * alfa) / (V * mu) < 1) {
-            this.A = A;
-            this.mu = mu;
-            this.V = V;
-            this.N = N;
-            return null;
-        }
-        return "Должно выполняться: ((N - V) • α)/(V • μ) < 1";
+        if (((N - V) * alfa) / (V * mu) >= 1) throw new ConditionException();
+        this.A = A;
+        this.mu = mu;
+        this.V = V;
+        this.N = N;
     }
     
     @Override

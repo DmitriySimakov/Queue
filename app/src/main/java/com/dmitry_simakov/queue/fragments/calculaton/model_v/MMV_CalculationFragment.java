@@ -6,12 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.fragments.BarGraphFragment;
 import com.dmitry_simakov.queue.fragments.DoubleBarGraphFragment;
 
 public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     
-    protected double[] W_Values = new double[6];
+    protected double[] W_Values = new double[5];
     public static final String W_VALUES = "W_VALUES";
     
     @Override
@@ -27,9 +26,10 @@ public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     }
     
     @Override
-    protected void refreshText(boolean b) {
-        super.refreshText(b);
-        if (b) {
+    protected void refreshTextViews() {
+        super.refreshTextViews();
+        
+        if (wasCalculated) {
             k_TextView.setText("γ_ = " + k);
             t_TextView.setText("j_ = " + t);
         } else {
@@ -39,12 +39,13 @@ public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     }
     
     @Override
-    protected void getP_Values() {
-        Log.d("LOG", "MMV_CalculationFragment: getP_Values");
+    protected void getParametersFromModel() {
+        super.getParametersFromModel();
+        
         double Pk_Values[] = model.getP();
-        P_Values = new double[V];
-        System.arraycopy(Pk_Values, 0, P_Values, 0, V);
-        System.arraycopy(Pk_Values, V, W_Values, 0, 6);
+        P_Values = new double[V + 1];
+        System.arraycopy(Pk_Values, 0, P_Values, 0, V + 1);
+        System.arraycopy(Pk_Values, V + 1, W_Values, 0, 5);
     }
     
     @Override

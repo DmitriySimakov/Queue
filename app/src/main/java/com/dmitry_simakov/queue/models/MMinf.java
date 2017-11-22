@@ -11,7 +11,7 @@ public class MMinf extends Model {
         modelImageHD = R.drawable.mminf_model_hd;
         BDPImage = R.drawable.mminf_bdp;
         BDPImageHD = R.drawable.mminf_bdp_hd;
-    
+        
         k_Formula = R.drawable.mminf_k;
         t_Formula = R.drawable.mminf_t;
         Pk_Formula = R.drawable.mminf_pk;

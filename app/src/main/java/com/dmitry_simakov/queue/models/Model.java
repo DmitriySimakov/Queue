@@ -10,6 +10,7 @@ public abstract class Model {
     protected int modelImageHD = R.drawable.empty_image;
     protected int BDPImage = R.drawable.empty_image; // Birth–death process scheme
     protected int BDPImageHD = R.drawable.empty_image;
+    protected int conditionImage = R.drawable.empty_image;
     
     protected double lambda;
     protected double mu;
@@ -24,11 +25,10 @@ public abstract class Model {
     protected double t_;
     protected int t_Formula = R.drawable.empty_image;
     
-    public String setValues(double lambda, double mu) {
+    public void setValues(double lambda, double mu) throws ConditionException {
         this.lambda = lambda;
         this.mu = mu;
         ro = lambda / mu;
-        return null;
     }
     
     public abstract void calculate();
@@ -49,4 +49,10 @@ public abstract class Model {
     
     public double getT_() { return t_; }
     public int getT_Formula() { return t_Formula; }
+    
+    public class ConditionException extends Exception {
+        public int getConditionImage() {
+            return conditionImage;
+        }
+    }
 }

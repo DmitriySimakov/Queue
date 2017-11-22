@@ -12,17 +12,16 @@ public class MMV extends Model_V {
         BDPImage = R.drawable.mmv_bdp;
         BDPImageHD = R.drawable.mmv_bdp_hd;
     
+        conditionImage = R.drawable.model_v_condition;
         k_Formula = R.drawable.mmv_gamma;
         t_Formula = R.drawable.mmv_j;
         Pt_Formula = R.drawable.mmv_pt;
         Pk_Formula = R.drawable.mmv_pk;
     }
     
-    public String setValues(double lambda, double mu, int V) {
-        if (lambda / (V * mu) < 1) {
-            return super.setValues(lambda, mu, V);
-        }
-        return "Должно выполняться: λ/(V • μ) < 1";
+    public void setValues(double lambda, double mu, int V) throws ConditionException {
+        if (lambda / (V * mu) >= 1) throw new ConditionException();
+        super.setValues(lambda, mu, V);
     }
     
     @Override

@@ -12,17 +12,16 @@ public class MM1 extends Model {
         BDPImage = R.drawable.mm1_bdp;
         BDPImageHD = R.drawable.mm1_bdp_hd;
         
+        conditionImage = R.drawable.mm1_condition;
         k_Formula = R.drawable.mm1_k;
         t_Formula = R.drawable.mm1_t;
         Pk_Formula = R.drawable.mm1_pk;
     }
     
     @Override
-    public String setValues(double lambda, double mu) {
-        if (lambda/mu < 1) {
-            return super.setValues(lambda, mu);
-        }
-        return "Должно выполняться: λ/μ < 1";
+    public void setValues(double lambda, double mu) throws ConditionException {
+        if (lambda/mu >= 1) throw new ConditionException();
+        super.setValues(lambda, mu);
     }
     
     @Override

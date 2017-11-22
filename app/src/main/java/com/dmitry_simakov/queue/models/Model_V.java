@@ -9,10 +9,9 @@ public abstract class Model_V extends Model {
     protected double Pt;
     protected int Pt_Formula = R.drawable.empty_image;
     
-    public String setValues(double lambda, double mu, int V) {
+    public void setValues(double lambda, double mu, int V) throws ConditionException {
         super.setValues(lambda, mu);
         this.V = V;
-        return null;
     }
     
     public double getPt() { return  Pt; };

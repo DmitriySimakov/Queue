@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.ModelActivity;
@@ -24,18 +24,24 @@ import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class Model_CalculationFragment extends Fragment implements View.OnClickListener {
     
-    protected int id;
     protected Model model;
+    protected int id;
     
     protected double lambda;
     protected EditText lambda_EditText;
+    protected TextView lambda_TextView;
     public static final String LAMBDA_VALUE = "LAMBDA_VALUE";
     
     protected double mu;
     protected EditText mu_EditText;
+    protected TextView mu_TextView;
     public static final String MU_VALUE = "MU_VALUE";
     
     protected Button OK_Button;
+    protected Button popupButton;
+    protected LinearLayout popupLayout;
+    protected boolean popupIsOpen = false;
+    public static final String POPUP_IS_OPEN = "POPUP_IS_OPEN";
     
     protected double k;
     protected TextView k_TextView;
@@ -51,8 +57,6 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected boolean wasCalculated = false;
     public static final String WAS_CALCULATED = "WAS_CALCULATED";
     
-    protected Toast toast = null;
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d("LOG", "Model_CalculationFragment: onCreate");
@@ -64,6 +68,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
     protected void getSavedInstanceStates(Bundle savedInstanceState) {
         wasCalculated = savedInstanceState.getBoolean(WAS_CALCULATED);
+        popupIsOpen = savedInstanceState.getBoolean(POPUP_IS_OPEN);
         
         lambda = savedInstanceState.getDouble(LAMBDA_VALUE);
         mu = savedInstanceState.getDouble(MU_VALUE);
@@ -85,22 +90,17 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         if (bundle != null) {
             id = bundle.getInt(ModelActivity.MODEL_ID);
         }
-        setModel();
-        
-        toast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
+        model = MODELS[id];
         
         findViews(v);
+        if (popupIsOpen) {
+            popupLayout.setVisibility(View.VISIBLE);
+        }
         
-        // Устанавливаю сохранённые значния полей ввода
-        refreshText(wasCalculated);
-        
+        refreshTextViews();
         createGraphFragment();
         
         return v;
-    }
-    
-    protected void setModel() {
-        model = MODELS[id];
     }
     
     protected void findViews(View v) {
@@ -108,6 +108,13 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         mu_EditText = v.findViewById(R.id.mu_EditText);
         OK_Button = v.findViewById(R.id.OK_Button);
         OK_Button.setOnClickListener(this);
+    
+        popupLayout = v.findViewById(R.id.popupLayout);
+        lambda_TextView = v.findViewById(R.id.lambda_TextView);
+        mu_TextView = v.findViewById(R.id.mu_TextView);
+        popupButton = v.findViewById(R.id.popupButton);
+        popupButton.setOnClickListener(this);
+        
         k_TextView = v.findViewById(R.id.k_TextView);
         k_TextView.setOnClickListener(this);
         t_TextView = v.findViewById(R.id.t_TextView);
@@ -116,17 +123,14 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         P_TextView.setOnClickListener(this);
     }
     
-    protected void refreshText(boolean b) {
-        if (b) {
-            lambda_EditText.setHint("λ = " + lambda);
-            mu_EditText.setHint("μ = " + mu);
-    
+    protected void refreshTextViews() {
+        if (wasCalculated) {
             k_TextView.setText("k_ = " + k);
             t_TextView.setText("t_ = " + t);
-        } else {
-            lambda_EditText.setHint("λ");
-            mu_EditText.setHint("μ");
     
+            lambda_TextView.setText(""+ lambda);
+            mu_TextView.setText(""+ mu);
+        } else {
             k_TextView.setText("k_");
             t_TextView.setText("t_");
         }
@@ -136,13 +140,13 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     public void onPause() {
         Log.d("LOG", "Model_CalculationFragment: onPause");
         super.onPause();
-        toast.cancel();
     }
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
         savedInstanceState.putBoolean(WAS_CALCULATED, wasCalculated);
+        savedInstanceState.putBoolean(POPUP_IS_OPEN, popupIsOpen);
         
         savedInstanceState.putDouble(LAMBDA_VALUE, lambda);
         savedInstanceState.putDouble(MU_VALUE, mu);
@@ -156,9 +160,15 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     public void onClick(View view) {
         Log.d("LOG", "Model_CalculationFragment: onClick");
         
+        
         switch (view.getId()) {
             case R.id.OK_Button:
-                onButtonPressed();
+                onOkButtonPressed();
+                break;
+            case R.id.popupButton:
+                moveTextToET();
+                popupLayout.setVisibility(View.GONE);
+                popupIsOpen = false;
                 break;
             case R.id.k_TextView:
                 ImageViewDialog.createDialog(model.getK_Formula(), getActivity());
@@ -172,67 +182,116 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         }
     }
     
-    protected void onButtonPressed() {
-        String lambdaStr = lambda_EditText.getText().toString();
-        String muStr = mu_EditText.getText().toString();
+    protected String lambda_Str;
+    protected String mu_Str;
+    protected EditText failedEditText;
     
-        if (lambdaStr.trim().length() == 0) {
-            invalidInput("Пожалуйста, введите λ", lambda_EditText);
+    protected void onOkButtonPressed() {
+        getTextFromEditTexts();
+        checkEditTextsFilled();
+        if (failedEditText != null) {
+            failedEditText.requestFocus();
             return;
         }
-        if (muStr.trim().length() == 0) {
-            invalidInput("Пожалуйста, введите μ", mu_EditText);
+        checkEditTextsCorrect();
+        if (failedEditText != null) {
+            failedEditText.requestFocus();
             return;
         }
+        checkValuesIsOnBounds();
+        if (failedEditText != null) {
+            failedEditText.requestFocus();
+            return;
+        }
+    
+        moveTextToTV();
+        popupLayout.setVisibility(View.VISIBLE);
+        popupIsOpen = true;
     
         try {
-            lambda = Double.parseDouble(lambdaStr);
-        } catch (Exception e) {
-            invalidInput("Некорректный ввод", lambda_EditText);
-            return;
-        }
-        try {
-            mu = Double.parseDouble(muStr);
-        } catch (Exception e) {
-            invalidInput("Некорректный ввод", mu_EditText);
-            return;
-        }
-    
-        lambda_EditText.setText("");
-        mu_EditText.setText("");
-    
-        String error = model.setValues(lambda, mu);
-        if (error != null) {
-            invalidInput(error, lambda_EditText);
+            setModelValues();
+        } catch (Model.ConditionException e) {
+            ImageViewDialog.createDialog(e.getConditionImage(), getActivity());
             return;
         }
         model.calculate();
         wasCalculated = true;
+        getParametersFromModel();
     
         // Скрыть клавиатуру
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(OK_Button.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     
-        // Показать введённые данные
+        // Показать вычисленные параметры
+        refreshTextViews();
+        createGraphFragment();
+        clearFocusFromEditTexts();
+    }
+    
+    protected void getTextFromEditTexts() {
+        lambda_Str = lambda_EditText.getText().toString();
+        mu_Str = mu_EditText.getText().toString();
+    }
+    
+    protected void checkEditTextsFilled() {
+        failedEditText = null;
+        if (lambda_Str.trim().length() == 0) {
+            lambda_EditText.setError("Введите λ");
+            failedEditText = lambda_EditText;
+        }
+        if (mu_Str.trim().length() == 0) {
+            mu_EditText.setError("Введите μ");
+            if (failedEditText == null) failedEditText = mu_EditText;
+        }
+    }
+    
+    protected void checkEditTextsCorrect() {
+        try {
+            lambda = Double.parseDouble(lambda_Str);
+        } catch (Exception e) {
+            lambda_EditText.setError("Некорректный ввод");
+            failedEditText = lambda_EditText;
+        }
+        
+        try {
+            mu = Double.parseDouble(mu_Str);
+        } catch (Exception e) {
+            mu_EditText.setError("Некорректный ввод");
+            if (failedEditText == null) failedEditText = mu_EditText;
+        }
+    }
+    
+    protected void checkValuesIsOnBounds() {
+        if (lambda <= 0) {
+            lambda_EditText.setError("λ∈(0; +∞)");
+            if (failedEditText == null) failedEditText = lambda_EditText;
+        }
+        if (mu <= 0) {
+            lambda_EditText.setError("μ∈(0; +∞)");
+            if (failedEditText == null) failedEditText = mu_EditText;
+        }
+    }
+    
+    protected void moveTextToTV() {
+        lambda_TextView.setText(lambda_EditText.getText());
+        mu_TextView.setText(mu_EditText.getText());
+        
+        lambda_EditText.setText("");
+        mu_EditText.setText("");
+    }
+    
+    protected void moveTextToET() {
+        lambda_EditText.setText(lambda_TextView.getText());
+        mu_EditText.setText(mu_TextView.getText());
+    }
+    
+    protected void setModelValues() throws Model.ConditionException {
+        model.setValues(lambda, mu);
+    }
+    
+    protected void getParametersFromModel() {
         k = model.getK_();
         t = model.getT_();
-        refreshText(true);
-    
-        getP_Values();
-        createGraphFragment();
-    
-        lambda_EditText.clearFocus();
-        mu_EditText.clearFocus();
-    }
-    
-    protected void invalidInput(String message, EditText editText) {
-        toast.setText(message);
-        toast.show();
-        editText.requestFocus();
-    }
-    
-    protected void getP_Values() {
-        Log.d("LOG", "Model_CalculationFragment: getP_Values");
         P_Values = model.getP();
     }
     
@@ -253,5 +312,10 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
         fragment.setArguments(args);
         myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();
+    }
+    
+    protected void clearFocusFromEditTexts() {
+        lambda_EditText.clearFocus();
+        mu_EditText.clearFocus();
     }
 }
