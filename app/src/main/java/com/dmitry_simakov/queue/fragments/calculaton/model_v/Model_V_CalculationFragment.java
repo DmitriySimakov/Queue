@@ -12,6 +12,8 @@ import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
 import com.dmitry_simakov.queue.models.Model;
 import com.dmitry_simakov.queue.models.Model_V;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
+
 public class Model_V_CalculationFragment extends Model_CalculationFragment {
     
     protected int V;
@@ -52,6 +54,12 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
         Pt_TextView = v.findViewById(R.id.Pt_TextView);
         Pt_TextView.setVisibility(View.VISIBLE);
         Pt_TextView.setOnClickListener(this);
+    }
+    
+    @Override
+    protected void setLastInputView() {
+        V_EditText.setImeOptions(IME_ACTION_DONE);
+        V_EditText.setOnEditorActionListener(this);
     }
     
     @Override

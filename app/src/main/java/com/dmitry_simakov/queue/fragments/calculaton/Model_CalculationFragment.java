@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +22,10 @@ import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.BarGraphFragment;
 import com.dmitry_simakov.queue.models.Model;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
-public class Model_CalculationFragment extends Fragment implements View.OnClickListener {
+public class Model_CalculationFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
     
     protected Model model;
     protected int id;
@@ -93,6 +96,8 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         model = MODELS[id];
         
         findViews(v);
+        setLastInputView();
+        
         if (popupIsOpen) {
             popupLayout.setVisibility(View.VISIBLE);
         }
@@ -121,6 +126,11 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         t_TextView.setOnClickListener(this);
         TextView P_TextView = v.findViewById(R.id.Pk_TextView);
         P_TextView.setOnClickListener(this);
+    }
+    
+    protected void setLastInputView() {
+        mu_EditText.setImeOptions(IME_ACTION_DONE);
+        mu_EditText.setOnEditorActionListener(this);
     }
     
     protected void refreshTextViews() {
@@ -159,7 +169,6 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         Log.d("LOG", "Model_CalculationFragment: onClick");
-        
         
         switch (view.getId()) {
             case R.id.OK_Button:
@@ -317,5 +326,14 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     protected void clearFocusFromEditTexts() {
         lambda_EditText.clearFocus();
         mu_EditText.clearFocus();
+    }
+    
+    @Override
+    public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+        if (id == EditorInfo.IME_ACTION_DONE) {
+            onOkButtonPressed();
+            return true;
+        }
+        return false;
     }
 }

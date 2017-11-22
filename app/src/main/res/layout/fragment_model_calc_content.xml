@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:hint="λ"
                     android:inputType="numberDecimal"
-                    />
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:id="@+id/mu_EditText"
@@ -44,7 +44,8 @@
                     android:layout_margin="@dimen/element_margin"
                     android:layout_weight="1"
                     android:hint="μ"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:id="@+id/V_EditText"
@@ -53,8 +54,9 @@
                     android:layout_margin="@dimen/element_margin"
                     android:layout_weight="1"
                     android:hint="V"
+                    android:visibility="gone"
                     android:inputType="number"
-                    android:visibility="gone"/>
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:id="@+id/N_EditText"
@@ -63,8 +65,9 @@
                     android:layout_margin="@dimen/element_margin"
                     android:layout_weight="1"
                     android:hint="N"
+                    android:visibility="gone"
                     android:inputType="number"
-                    android:visibility="gone"/>
+                    android:imeOptions="actionDone"/>
 
                 <Button
                     android:id="@+id/OK_Button"
