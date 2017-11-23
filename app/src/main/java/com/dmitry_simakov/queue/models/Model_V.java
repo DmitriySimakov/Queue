@@ -16,4 +16,5 @@ public abstract class Model_V extends Model {
     
     public double getPt() { return  Pt; };
     public int getPt_Formula() { return Pt_Formula; }
+    public String getPt_Description() { return "Вероятность потерь по времени"; }
 }

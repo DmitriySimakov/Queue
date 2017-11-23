@@ -73,4 +73,10 @@ public class MMV extends Model_V {
         // Считаем j_
         t_ = lambda * k_;
     }
+    
+    @Override
+    public String getK_Description() { return "Среднее время ожидания начала обслуживания"; }
+    
+    @Override
+    public String getT_Description() { return "Среднее число требований в очереди"; }
 }

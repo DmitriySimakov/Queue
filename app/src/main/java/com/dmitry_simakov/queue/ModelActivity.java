@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -66,13 +67,22 @@ public class ModelActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "ModelActivity: onOptionsItemSelected");
+    
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_settings:
-                return true;
+            case R.id.conventions:
+                builder.setTitle(R.string.conventions);
+                builder.setItems(R.array.conventionsArray, null);
+                break;
+            case R.id.about:
+                builder.setTitle(R.string.about);
+                builder.setMessage(R.string.aboutMessage);
+                break;
         }
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        
         return super.onOptionsItemSelected(item);
     }
     

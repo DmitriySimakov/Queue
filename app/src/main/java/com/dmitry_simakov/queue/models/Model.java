@@ -43,12 +43,15 @@ public abstract class Model {
     
     public double[] getP() { return  P; }
     public int getPk_Formula() { return Pk_Formula; }
+    public String getPk_Description() { return "Вероятность наличия в системе ровно k вызовов"; }
     
     public double getK_() { return k_; }
     public int getK_Formula() { return k_Formula; }
+    public String getK_Description() { return "Среднее число вызовов в системе"; }
     
     public double getT_() { return t_; }
     public int getT_Formula() { return t_Formula; }
+    public String getT_Description() { return "Среднее время прибывания в системе"; }
     
     public class ConditionException extends Exception {
         public int getConditionImage() {

@@ -180,13 +180,13 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
                 popupIsOpen = false;
                 break;
             case R.id.k_TextView:
-                ImageViewDialog.createDialog(model.getK_Formula(), getActivity());
+                ImageViewDialog.createDialog(model.getK_Formula(), model.getK_Description(), getActivity());
                 break;
             case R.id.t_TextView:
-                ImageViewDialog.createDialog(model.getT_Formula(), getActivity());
+                ImageViewDialog.createDialog(model.getT_Formula(), model.getT_Description(), getActivity());
                 break;
             case R.id.Pk_TextView:
-                ImageViewDialog.createDialog(model.getPk_Formula(), getActivity());
+                ImageViewDialog.createDialog(model.getPk_Formula(), model.getPk_Description(), getActivity());
                 break;
         }
     }
@@ -220,7 +220,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
         try {
             setModelValues();
         } catch (Model.ConditionException e) {
-            ImageViewDialog.createDialog(e.getConditionImage(), getActivity());
+            ImageViewDialog.createDialog(e.getConditionImage(), "", getActivity());
             return;
         }
         model.calculate();

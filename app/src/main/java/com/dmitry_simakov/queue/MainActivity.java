@@ -2,6 +2,7 @@ package com.dmitry_simakov.queue;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -30,11 +31,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "MainActivity: onOptionItemSelected");
-        int id = item.getItemId();
-        
-        if (id == R.id.action_settings) {
-            return true;
+    
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        switch (item.getItemId()) {
+            case R.id.conventions:
+                builder.setTitle(R.string.conventions);
+                builder.setItems(R.array.conventionsArray, null);
+                break;
+            case R.id.about:
+                builder.setTitle(R.string.about);
+                builder.setMessage(R.string.aboutMessage);
+                break;
         }
+        AlertDialog dialog = builder.create();
+        dialog.show();
         
         return super.onOptionsItemSelected(item);
     }

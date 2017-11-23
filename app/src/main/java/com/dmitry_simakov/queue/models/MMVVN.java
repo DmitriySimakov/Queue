@@ -82,8 +82,8 @@ public class MMVVN extends Model_V {
     public double getPb() {
         return Pb;
     }
-    
     public int getPb_Formula() {
         return PbFormula;
     }
+    public String getPb_Description() { return "Вероятность потерь по вызовам"; }
 }

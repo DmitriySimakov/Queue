@@ -25,8 +25,6 @@ public class ModelDescriptionFragment extends Fragment implements View.OnClickLi
     ImageView modelImageView;
     ImageView BDPImageView;
     
-    public static final String IMAGE = "IMAGE";
-    
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,10 +55,10 @@ public class ModelDescriptionFragment extends Fragment implements View.OnClickLi
         Log.d("LOG", "ModelDescriptionFragment: onClick");
         switch (view.getId()) {
             case R.id.modelImageView:
-                ImageViewDialog.createDialog(model.getModelImageHD(), getActivity());
+                ImageViewDialog.createDialog(model.getModelImageHD(), "Схема модели", getActivity());
                 break;
             case R.id.BDPImageView:
-                ImageViewDialog.createDialog(model.getBDPImageHD(), getActivity());
+                ImageViewDialog.createDialog(model.getBDPImageHD(), "Диаграмма процесса рождения-смерти", getActivity());
                 break;
         }
     }

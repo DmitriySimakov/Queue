@@ -1,13 +1,39 @@
 <resources>
     <string name="app_name">Queue</string>
-    <string name="action_settings">Настройки</string>
+
+    <!--ModelDescription-->
     <string name="description">Описание</string>
-    <string name="calculation">Рассчёт</string>
     <string name="text_description">Здесь будет текстовое описание модели</string>
     <string name="model_scheme">Схема модели</string>
     <string name="BDP_scheme">Birth–death process</string>
+
+    <!--ModelCalculation-->
+    <string name="calculation">Рассчёт</string>
     <string name="ok">OK</string>
-    <string name="bargraph">Гистограмма</string>
-    <string name="graph">График</string>
-    <string name="table">Таблица</string>
+
+    <!--Menu-->
+        <!--Export-->
+        <string name="export">Экспорт</string>
+
+        <!--About-->
+        <string name="about">О программе</string>
+        <string name="aboutMessage">Queue\nВерсия: 1.0\n© Dmitry Simakov, 2017\nАвтор: Дмитрий Симаков</string>
+
+        <!--Conventions-->
+        <string name="conventions">Условные обозначения</string>
+        <string-array name="conventionsArray">
+            <item>λ - интенсивность поступления вызовов</item>
+            <item>μ - интенсивность освобождения вызовов</item>
+            <item>ρ - отношение λ/μ</item>
+            <item>Pk - вероятность наличия в системе ровно k вызовов</item>
+            <item>k_ - среднее число вызовов в системе</item>
+            <item>t_ - среднее время прибывания в системе</item>
+            <item>γ_ - среднее время ожидания начала обслуживания</item>
+            <item>j_ - среднее число требований в очереди</item>
+            <item>α - удельная интенсивность поступления вызовов (интенсивность от одного источника)</item>
+            <item>A - </item>
+            <item>Pt - вероятность потерь по времени</item>
+            <item>Pв - вероятность потерь по вызовам</item>
+        </string-array>
+
 </resources>

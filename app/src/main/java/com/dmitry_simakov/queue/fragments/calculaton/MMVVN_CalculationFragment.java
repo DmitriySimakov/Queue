@@ -67,11 +67,11 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
         super.refreshTextViews();
         
         if (wasCalculated) {
-            Pb_TextView.setText("Pb = " + Pb);
+            Pb_TextView.setText("Pв = " + Pb);
     
             N_TextView.setText(""+ N);
         } else {
-            Pb_TextView.setText("Pb");
+            Pb_TextView.setText("Pв");
         }
     }
     
@@ -82,7 +82,7 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
         
         switch (view.getId()) {
             case R.id.Pb_TextView:
-                ImageViewDialog.createDialog(((MMVVN)model).getPb_Formula(), getActivity());
+                ImageViewDialog.createDialog(((MMVVN)model).getPb_Formula(), ((MMVVN)model).getPb_Description(), getActivity());
                 break;
         }
     }

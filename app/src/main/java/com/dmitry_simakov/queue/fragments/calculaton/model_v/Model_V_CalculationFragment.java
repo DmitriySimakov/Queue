@@ -82,7 +82,7 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
         
         switch (view.getId()) {
             case R.id.Pt_TextView:
-                ImageViewDialog.createDialog(((Model_V)model).getPt_Formula(), getActivity());
+                ImageViewDialog.createDialog(((Model_V)model).getPt_Formula(), ((Model_V)model).getPt_Description(), getActivity());
                 break;
         }
     }
