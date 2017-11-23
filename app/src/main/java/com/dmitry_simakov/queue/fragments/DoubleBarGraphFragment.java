@@ -18,13 +18,13 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
     
     private double[] y2_Values;
     
-    protected TextView W_TextView;
-    
     @Override
     protected void getBundle(Bundle bundle) {
         super.getBundle(bundle);
         y2_Values = bundle.getDoubleArray(MMV_CalculationFragment.W_VALUES);
     }
+    
+    BarDataSet dataSet2;
     
     @Override
     protected void prepareData(BarData data) {
@@ -40,17 +40,31 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
         for (int i = 0; i < y2_Values.length; i++) {
             entries.add(new BarEntry(i + y1_Values.length, (float) y2_Values[i]));
         }
-        BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
+        dataSet2 = new BarDataSet(entries, "График чего-то там");
     
         // Настройки столбцов
-        dataSet.setColor(grey900);
-        dataSet.setHighLightColor(white);
+        dataSet2.setColor(grey900);
+        dataSet2.setHighLightColor(white);
     
         // Настройки значений над столбцами
-        dataSet.setValueTextColor(grey900);
-        dataSet.setValueTextSize(10f);
-        //dataSet.setDrawValues(false);
+        dataSet2.setValueTextColor(grey900);
+        data.addDataSet(dataSet2);
+    }
     
-        data.addDataSet(dataSet);
+    @Override
+    protected void adjustTextSize() {
+        int columns = y1_Values.length + y2_Values.length;
+        if (columns <= 20) {
+            if (columns >= 10) {
+                dataSet.setValueTextSize(100 / columns);
+                dataSet2.setValueTextSize(100 / columns);
+            } else {
+                dataSet.setValueTextSize(10);
+                dataSet2.setValueTextSize(10);
+            }
+        } else {
+            dataSet.setDrawValues(false);
+            dataSet2.setDrawValues(false);
+        }
     }
 }

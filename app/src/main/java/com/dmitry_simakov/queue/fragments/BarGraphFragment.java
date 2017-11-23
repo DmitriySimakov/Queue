@@ -63,6 +63,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         // Задаём значения гистограмме
         BarData data = new BarData();
         prepareData(data);
+        adjustTextSize();
         data.setBarWidth(0.9f); // Ширина бара определяется X величиной
     
         // настройки гистограммы
@@ -95,6 +96,8 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         y1_Values = bundle.getDoubleArray(Model_CalculationFragment.P_VALUES);
     }
     
+    BarDataSet dataSet;
+    
     protected void prepareData(BarData data) {
         Log.d("LOG", "BarGraphFragment: prepareData");
         // подготовим цвета
@@ -107,7 +110,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         for (int i = 0; i < y1_Values.length; i++) {
             entries.add(new BarEntry(i, (float) y1_Values[i]));
         }
-        BarDataSet dataSet = new BarDataSet(entries, "График чего-то там");
+        dataSet = new BarDataSet(entries, "График чего-то там");
     
         // Настройки столбцов
         dataSet.setColor(red700);
@@ -115,10 +118,19 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     
         // Настройки значений над столбцами
         dataSet.setValueTextColor(grey900);
-        dataSet.setValueTextSize(10f);
-        //dataSet.setDrawValues(false);
-        
         data.addDataSet(dataSet);
+    }
+    
+    protected void adjustTextSize() {
+        if (y1_Values.length <= 20) {
+            if (y1_Values.length >= 10) {
+                dataSet.setValueTextSize(100 / y1_Values.length);
+            } else {
+                dataSet.setValueTextSize(10);
+            }
+        } else {
+            dataSet.setDrawValues(false);
+        }
     }
     
     @Override
