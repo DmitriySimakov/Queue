@@ -5,7 +5,7 @@ import com.dmitry_simakov.queue.R;
 public abstract class Model {
     
     protected String name = "Model Name";
-    
+    protected String description = "Model Description";
     protected int modelImage = R.drawable.empty_image;
     protected int modelImageHD = R.drawable.empty_image;
     protected int BDPImage = R.drawable.empty_image; // Birth–death process scheme
@@ -34,7 +34,7 @@ public abstract class Model {
     public abstract void calculate();
     
     public String getName() { return name; }
-    
+    public String getDescription() { return description; }
     public int getModelImage() { return modelImage; }
     public int getModelImageHD() { return modelImageHD; }
     

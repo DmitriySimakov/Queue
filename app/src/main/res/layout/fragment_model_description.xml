@@ -17,11 +17,12 @@
         android:layout_margin="@dimen/card_margin">
 
         <TextView
-            android:id="@+id/textView"
-            android:text="@string/text_description"
+            android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/element_margin"/>
+            android:layout_marginLeft="4dp"
+            android:scrollbars="vertical"
+            android:text="@string/text_description"/>
 
     </android.support.v7.widget.CardView>
 

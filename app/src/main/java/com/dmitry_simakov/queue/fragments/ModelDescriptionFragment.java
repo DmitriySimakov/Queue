@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.ModelActivity;
@@ -38,6 +40,10 @@ public class ModelDescriptionFragment extends Fragment implements View.OnClickLi
         }
         
         model = MODELS[id];
+        
+        TextView descriptionTextView = v.findViewById(R.id.descriptionTextView);
+        descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+        descriptionTextView.setText(model.getDescription());
     
         modelImageView = v.findViewById(R.id.modelImageView);
         modelImageView.setImageResource(model.getModelImage());

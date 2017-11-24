@@ -67,22 +67,28 @@ public class ModelActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "ModelActivity: onOptionsItemSelected");
-    
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this);
-        switch (item.getItemId()) {
-            case R.id.conventions:
-                builder.setTitle(R.string.conventions);
-                builder.setItems(R.array.conventionsArray, null);
-                break;
-            case R.id.about:
-                builder.setTitle(R.string.about);
-                builder.setMessage(R.string.aboutMessage);
-                break;
-        }
-        AlertDialog dialog = builder.create();
-        dialog.show();
         
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.conventions:
+                AlertDialog.Builder builder1;
+                builder1 = new AlertDialog.Builder(this);
+                builder1.setTitle(R.string.conventions);
+                builder1.setItems(R.array.conventionsArray, null);
+                AlertDialog dialog1 = builder1.create();
+                dialog1.show();
+                return true;
+            case R.id.about:
+                AlertDialog.Builder builder2;
+                builder2 = new AlertDialog.Builder(this);
+                builder2.setTitle(R.string.about);
+                builder2.setMessage(R.string.aboutMessage);
+                AlertDialog dialog2 = builder2.create();
+                dialog2.show();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     
