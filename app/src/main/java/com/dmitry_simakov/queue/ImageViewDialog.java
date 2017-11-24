@@ -1,6 +1,5 @@
 package com.dmitry_simakov.queue;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.support.annotation.NonNull;

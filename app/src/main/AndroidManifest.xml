@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ModelActivity"/>
-        <activity android:name=".ImageViewDialog">
-        </activity>
+        <activity
+            android:name=".ModelActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
