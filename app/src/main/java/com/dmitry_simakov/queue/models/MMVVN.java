@@ -52,7 +52,7 @@ public class MMVVN extends Model_V {
     
         // Считаем промежуточные значения
         double combination = 1; // Сочетание из N по 0
-        double part = A/(1-A);
+        double part = A / (1 - A);
         double PART_pow_X = 1; // дробь в степени 0
         P[0] = 1; // Считаю числитель P[0]
         double sum1 = P[0];
@@ -71,10 +71,7 @@ public class MMVVN extends Model_V {
         Pb = (P[V] * (n - V) / n) / sum2;
     
         // Считаем P и k_
-        combination = 1; // Сочетание из N по 0
-        PART_pow_X = 1; // дробь в степени 0
         k_ = 0;
-        
         for (int k = 0; k <= V; k++) {
             P[k] /= sum1;
             k_ += k * P[k];

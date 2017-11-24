@@ -38,7 +38,7 @@ public class MM1 extends Model {
     
         // Считаем P
         double RO_pow_K = 1; // ro^0
-        P[0] = (1 - ro); // Считаю P[0]
+        P[0] = 1 - ro; // Считаю P[0]
         
         for (int k = 1; k <= 10; k++) {
             RO_pow_K *= ro;

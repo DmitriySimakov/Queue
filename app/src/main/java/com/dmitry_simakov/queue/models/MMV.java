@@ -59,7 +59,7 @@ public class MMV extends Model_V {
         // Считаем P
         // Левая часть графика
         for (int k = 0; k <= V; k++) {
-            P[k] = P[k] / denominator;
+            P[k] /= denominator;
         }
         // Правая часть графика
         double RO_div_V = ro / V;

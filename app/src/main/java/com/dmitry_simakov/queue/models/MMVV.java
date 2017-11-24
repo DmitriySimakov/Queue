@@ -50,7 +50,7 @@ public class MMVV extends Model_V {
             sum += P[x]; // Считаю сумму из знаменателя
         }
         for (int k = 0; k <= V; k++) {
-            P[k] = P[k] / sum;
+            P[k] /= sum;
         }
     
         // Считаем Pt
