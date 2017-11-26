@@ -3,10 +3,9 @@ package com.dmitry_simakov.queue.fragments.calculaton.model_v;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.fragments.DoubleBarGraphFragment;
+import com.dmitry_simakov.queue.fragments.graphs.DoubleBarGraphFragment;
 
 public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     
@@ -50,21 +49,12 @@ public class MMV_CalculationFragment extends Model_V_CalculationFragment {
     
     @Override
     protected void createGraphFragment() {
-        Log.d("LOG", "MMV_CalculationFragment: createGraphFragment");
         FragmentManager myFragmentManager = getFragmentManager();
-        Fragment fragment = null;
+        Fragment fragment;
         Bundle args = new Bundle();
         args.putDoubleArray(P_VALUES, P_Values);
         args.putDoubleArray(W_VALUES, W_Values);
-        //switch (/* Settings choice */) {
-        //    case R.id.bar_graph:
         fragment = new DoubleBarGraphFragment();
-        //        break;
-        //    case R.id.graph:
-        //        fragment = new LineGraphFragment();
-        //        break;
-        //}
-    
         fragment.setArguments(args);
         myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();
     }

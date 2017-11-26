@@ -1,9 +1,7 @@
-package com.dmitry_simakov.queue.fragments;
+package com.dmitry_simakov.queue.fragments.graphs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.calculaton.model_v.MMV_CalculationFragment;
@@ -29,7 +27,6 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
     @Override
     protected void prepareData(BarData data) {
         super.prepareData(data);
-        Log.d("LOG", "DoubleGraphFragment: prepareData");
         
         // подготовим цвета
         Resources res = getResources();
@@ -40,7 +37,7 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
         for (int i = 0; i < y2_Values.length; i++) {
             entries.add(new BarEntry(i + y1_Values.length, (float) y2_Values[i]));
         }
-        dataSet2 = new BarDataSet(entries, "График чего-то там");
+        dataSet2 = new BarDataSet(entries, "Вероятность j ожидающих");
     
         // Настройки столбцов
         dataSet2.setColor(grey900);
@@ -53,14 +50,18 @@ public class DoubleBarGraphFragment extends BarGraphFragment {
     
     @Override
     protected void adjustTextSize() {
-        int columns = y1_Values.length + y2_Values.length;
-        if (columns <= 20) {
-            if (columns >= 10) {
-                dataSet.setValueTextSize(100 / columns);
-                dataSet2.setValueTextSize(100 / columns);
+        float barsInWindow = (y1_Values.length + y2_Values.length) / chart.getScaleX();
+        
+        if (barsInWindow <= BARS_FOR_MIN_TEXT_SIZE) {
+            dataSet.setDrawValues(true);
+            dataSet2.setDrawValues(true);
+        
+            if (barsInWindow >= BARS_FOR_MAX_TEXT_SIZE) {
+                dataSet.setValueTextSize(100 / barsInWindow);
+                dataSet2.setValueTextSize(100 / barsInWindow);
             } else {
-                dataSet.setValueTextSize(10);
-                dataSet2.setValueTextSize(10);
+                dataSet.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
+                dataSet2.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
             }
         } else {
             dataSet.setDrawValues(false);

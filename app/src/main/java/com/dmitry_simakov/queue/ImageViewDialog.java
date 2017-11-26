@@ -41,8 +41,6 @@ public class ImageViewDialog extends AppCompatDialogFragment {
     }
     
     public static void createDialog(int image, String description, FragmentActivity activity) {
-        Log.d("LOG", "ImageViewDialog: createDialog");
-        
         ImageViewDialog dialog = new ImageViewDialog();
         Bundle args = new Bundle();
         args.putInt(IMAGE, image);

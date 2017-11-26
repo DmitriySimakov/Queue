@@ -1,7 +1,6 @@
 package com.dmitry_simakov.queue.fragments.calculaton;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,8 +10,6 @@ import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.calculaton.model_v.Model_V_CalculationFragment;
 import com.dmitry_simakov.queue.models.MMVVN;
 import com.dmitry_simakov.queue.models.Model;
-
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
 public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
     
@@ -78,7 +75,6 @@ public class MMVVN_CalculationFragment extends Model_V_CalculationFragment {
     @Override
     public void onClick(View view) {
         super.onClick(view);
-        Log.d("LOG", "MMVVN_CalculationFragment: onClick");
         
         switch (view.getId()) {
             case R.id.Pb_TextView:

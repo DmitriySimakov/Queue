@@ -26,6 +26,7 @@ public class MM1 extends Model {
         Pk_Formula = R.drawable.mm1_pk;
     }
     
+    
     @Override
     public void setValues(double lambda, double mu) throws ConditionException {
         if (lambda/mu >= 1) throw new ConditionException();

@@ -26,6 +26,13 @@ public class MMV extends Model_V {
         Pk_Formula = R.drawable.mmv_pk;
     }
     
+    @Override
+    public String getK_Description() { return "Среднее время ожидания начала обслуживания"; }
+    
+    @Override
+    public String getT_Description() { return "Среднее число требований в очереди"; }
+    
+    
     public void setValues(double lambda, double mu, int V) throws ConditionException {
         if (lambda / (V * mu) >= 1) throw new ConditionException();
         super.setValues(lambda, mu, V);
@@ -80,10 +87,4 @@ public class MMV extends Model_V {
         // Считаем j_
         t_ = lambda * k_;
     }
-    
-    @Override
-    public String getK_Description() { return "Среднее время ожидания начала обслуживания"; }
-    
-    @Override
-    public String getT_Description() { return "Среднее число требований в очереди"; }
 }

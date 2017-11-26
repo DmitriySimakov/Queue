@@ -4,4 +4,4 @@
     android:id="@+id/bar_graph_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dmitry_simakov.queue.fragments.BarGraphFragment"/>
+    tools:context="com.dmitry_simakov.queue.fragments.graphs.BarGraphFragment"/>

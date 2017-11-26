@@ -1,7 +1,6 @@
 package com.dmitry_simakov.queue.fragments.calculaton.model_v;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
     @Override
     protected void getSavedInstanceStates(Bundle savedInstanceState) {
         super.getSavedInstanceStates(savedInstanceState);
-        Log.d("LOG", "Model_V_CalculationFragment: getSavedInstanceState");
         
         V = savedInstanceState.getInt(V_VALUE);
         Pt = savedInstanceState.getFloat(Pt_VALUE);
@@ -77,7 +75,6 @@ public class Model_V_CalculationFragment extends Model_CalculationFragment {
     
     @Override
     public void onClick(View view) {
-        Log.d("LOG", "Model_V_CalculationFragment: onClick");
         super.onClick(view);
         
         switch (view.getId()) {

@@ -29,6 +29,7 @@ public class MMinf extends Model {
         Pk_Formula = R.drawable.mminf_pk;
     }
     
+    
     @Override
     public void calculate() {
         P = new double[11];

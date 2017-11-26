@@ -26,9 +26,7 @@ public class ModelsListAdapter extends RecyclerView.Adapter<ModelsListAdapter.Vi
         TextView modelName;
         ImageView image;
         
-        private View.OnClickListener clickListener;
-        
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             
             modelName = itemView.findViewById(R.id.title);

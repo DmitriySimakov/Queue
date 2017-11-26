@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import com.dmitry_simakov.queue.ImageViewDialog;
 import com.dmitry_simakov.queue.ModelActivity;
 import com.dmitry_simakov.queue.R;
-import com.dmitry_simakov.queue.fragments.BarGraphFragment;
+import com.dmitry_simakov.queue.fragments.graphs.BarGraphFragment;
 import com.dmitry_simakov.queue.models.Model;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
@@ -62,8 +61,8 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("LOG", "Model_CalculationFragment: onCreate");
         super.onCreate(savedInstanceState);
+        
         if (savedInstanceState != null) {
             getSavedInstanceStates(savedInstanceState);
         }
@@ -85,7 +84,6 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     
-        Log.d("LOG", "Model_CalculationFragment: onCreateView");
         final View v = inflater.inflate(R.layout.fragment_model_calc, container, false);
     
         // Получаем модель по id
@@ -147,14 +145,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     }
     
     @Override
-    public void onPause() {
-        Log.d("LOG", "Model_CalculationFragment: onPause");
-        super.onPause();
-    }
-    
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        Log.d("LOG", "Model_CalculationFragment: onSaveInstanceState");
         savedInstanceState.putBoolean(WAS_CALCULATED, wasCalculated);
         savedInstanceState.putBoolean(POPUP_IS_OPEN, popupIsOpen);
         
@@ -168,7 +159,6 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
     @Override
     public void onClick(View view) {
-        Log.d("LOG", "Model_CalculationFragment: onClick");
         
         switch (view.getId()) {
             case R.id.OK_Button:
@@ -305,20 +295,11 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     }
     
     protected void createGraphFragment() {
-        Log.d("LOG", "Model_CalculationFragment: createGraphFragment");
         FragmentManager myFragmentManager = getFragmentManager();
         Fragment fragment = null;
         Bundle args = new Bundle();
         args.putDoubleArray(P_VALUES, P_Values);
-        //switch (/* Settings choice */) {
-        //    case R.id.bar_graph:
-            fragment = new BarGraphFragment();
-        //        break;
-        //    case R.id.graph:
-        //        fragment = new LineGraphFragment();
-        //        break;
-        //}
-    
+        fragment = new BarGraphFragment();
         fragment.setArguments(args);
         myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();
     }

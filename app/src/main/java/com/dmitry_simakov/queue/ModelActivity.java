@@ -1,7 +1,9 @@
 package com.dmitry_simakov.queue;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,32 +13,47 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dmitry_simakov.queue.fragments.calculaton.MMVVN_CalculationFragment;
 import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
-import com.dmitry_simakov.queue.fragments.calculaton.model_v.MMVV_CalculationFragment;
 import com.dmitry_simakov.queue.fragments.calculaton.model_v.MMV_CalculationFragment;
 import com.dmitry_simakov.queue.fragments.ModelDescriptionFragment;
+import com.dmitry_simakov.queue.fragments.calculaton.model_v.Model_V_CalculationFragment;
+import com.dmitry_simakov.queue.models.Model;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.dmitry_simakov.queue.fragments.MainActivityFragment.MODELS;
 
 public class ModelActivity extends AppCompatActivity {
     
+    Model model;
     public static final String MODEL_ID = "MODEL_ID";
     private int id;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("LOG", "ModelActivity: onCreate");
+        
         setContentView(R.layout.activity_model);
         
         // Получаю id выбранной модели
         Intent intent = getIntent();
         id = intent.getIntExtra(MODEL_ID, 0);
+        model = MODELS[id];
     
         // Устанавливаю тулбар
         Toolbar toolbar = findViewById(R.id.model_toolbar);
@@ -45,7 +62,7 @@ public class ModelActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(MODELS[id].getName());
+            actionBar.setTitle(model.getName());
         }
     
         // Устанавливаю ViewPager
@@ -59,18 +76,45 @@ public class ModelActivity extends AppCompatActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("LOG", "ModelActivity: onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.menu_model, menu);
         return true;
     }
     
+    private String filename = "";
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("LOG", "ModelActivity: onOptionsItemSelected");
-        
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+                
+            case R.id.export:
+                if (model.getRo() == -1) {
+                    Toast.makeText(this, "Нечего экспортировать. Проведите рассчёт.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Экспорт");
+                final EditText input = new EditText(this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setHint("Имя файла");
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        filename = input.getText().toString();
+                        if (!filename.equals("")) export();
+                    }
+                });
+                builder.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
                 return true;
             case R.id.conventions:
                 AlertDialog.Builder builder1;
@@ -92,9 +136,38 @@ public class ModelActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     
+    private void export() {
+        String path = getExternalFilesDir(null).getPath();
+        File file = new File(path, filename + ".csv");
+        try {
+            OutputStream out = new FileOutputStream(file);
+            out.write("Входные параметры:\n".getBytes());
+            Map<String, String> map = model.getInputParameters();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                out.write((entry.getKey() + ';').getBytes());
+                out.write((entry.getValue() + '\n').getBytes());
+            }
+            out.write("Выходные параметры:\n".getBytes());
+            map = model.getOutputParameters();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                out.write((entry.getKey() + ';').getBytes());
+                out.write((entry.getValue() + '\n').getBytes());
+            }
+            double[] P = model.getP();
+            for (int i = 0; i < P.length; i++) {
+                out.write(("P[" + i +"];").getBytes());
+                out.write((Double.toString(P[i]) + '\n').getBytes());
+            }
+            out.close();
+            Toast.makeText(this, "Данные успешно экспортированы в файл: " + path, Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "Экспорт не удался", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
         
@@ -123,7 +196,7 @@ public class ModelActivity extends AppCompatActivity {
                             return mmvCalculationFragment;
                         // MMVV
                         case 3:
-                            MMVV_CalculationFragment mmvvCalculationFragment = new MMVV_CalculationFragment();
+                            Model_V_CalculationFragment mmvvCalculationFragment = new Model_V_CalculationFragment();
                             mmvvCalculationFragment.setArguments(args);
                             return mmvvCalculationFragment;
                         // MMVVN

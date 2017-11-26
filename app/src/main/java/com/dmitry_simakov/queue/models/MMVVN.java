@@ -28,6 +28,8 @@ public class MMVVN extends Model_V {
         BDPImage = R.drawable.mmvvn_bdp;
         BDPImageHD = R.drawable.mmvvn_bdp_hd;
     
+        hasQueue = false;
+    
         conditionImage = R.drawable.mmvvn_condition;
         k_Formula = R.drawable.mmvvn_k;
         t_Formula = R.drawable.mmvvn_t;
@@ -35,6 +37,15 @@ public class MMVVN extends Model_V {
         PbFormula = R.drawable.mmvvn_pb;
         Pk_Formula = R.drawable.mmvvn_pk;
     }
+    
+    public double getPb() {
+        return Pb;
+    }
+    public int getPb_Formula() {
+        return PbFormula;
+    }
+    public String getPb_Description() { return "Вероятность потерь по вызовам"; }
+    
     
     public void setValues(double A, double mu, int V, int N) throws ConditionException {
         alfa = (A * mu) / (1 - A);
@@ -83,12 +94,4 @@ public class MMVVN extends Model_V {
         // Считаем t_
         t_ = k_ / ((n - k_) * alfa);
     }
-    
-    public double getPb() {
-        return Pb;
-    }
-    public int getPb_Formula() {
-        return PbFormula;
-    }
-    public String getPb_Description() { return "Вероятность потерь по вызовам"; }
 }

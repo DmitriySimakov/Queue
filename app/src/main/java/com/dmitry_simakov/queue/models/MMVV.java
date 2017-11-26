@@ -4,9 +4,6 @@ import com.dmitry_simakov.queue.R;
 
 public class MMVV extends Model_V {
     
-    private double gamma;
-    private double j;
-    
     public MMVV() {
         name = "M/M/v/K, K=v";
         description = "Очередь M/M/v/K представляет собой систему, в которой интенсивность " +
@@ -20,12 +17,15 @@ public class MMVV extends Model_V {
         BDPImage = R.drawable.mmvv_bdp;
         BDPImageHD = R.drawable.mmvv_bdp_hd;
     
+        hasQueue = false;
+        
         conditionImage = R.drawable.model_v_condition;
         k_Formula = R.drawable.mmvv_k;
         t_Formula = R.drawable.mmvv_t;
         Pt_Formula = R.drawable.mmvv_pt;
         Pk_Formula = R.drawable.mmvv_pk;
     }
+    
     
     public void setValues(double lambda, double mu, int V) throws ConditionException {
         if (lambda / (V * mu) >= 1) throw new ConditionException();

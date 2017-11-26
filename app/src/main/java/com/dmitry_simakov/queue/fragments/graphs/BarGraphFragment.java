@@ -1,11 +1,10 @@
-package com.dmitry_simakov.queue.fragments;
+package com.dmitry_simakov.queue.fragments.graphs;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,22 +13,20 @@ import android.widget.TextView;
 import com.dmitry_simakov.queue.R;
 import com.dmitry_simakov.queue.fragments.calculaton.Model_CalculationFragment;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarGraphFragment extends Fragment implements OnChartValueSelectedListener {
+public class BarGraphFragment extends Fragment implements OnChartValueSelectedListener, OnChartGestureListener {
     
     protected BarChart chart;
     
@@ -41,7 +38,6 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     
-        Log.d("LOG", "BarGraphFragment: onCreateView");
         View v = inflater.inflate(R.layout.fragment_bar_graph, container, false);
     
         // Получаем значения из активити
@@ -72,8 +68,6 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         chart.setDrawBarShadow(false);
     
         chart.setDoubleTapToZoomEnabled(false);
-        //chart.setScaleEnabled(false);
-        //chart.setDragEnabled(false);
         chart.setPinchZoom(true);
         chart.setBottom(0);
         
@@ -81,7 +75,8 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         chart.getAxisRight().setEnabled(false);
     
         chart.setOnChartValueSelectedListener(this);
-    
+        chart.setOnChartGestureListener(this);
+        
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
@@ -92,14 +87,12 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     }
     
     protected void getBundle(Bundle bundle) {
-        Log.d("LOG", "BarGraphFragment: getBundle");
         y1_Values = bundle.getDoubleArray(Model_CalculationFragment.P_VALUES);
     }
     
     BarDataSet dataSet;
     
     protected void prepareData(BarData data) {
-        Log.d("LOG", "BarGraphFragment: prepareData");
         // подготовим цвета
         Resources res = getResources();
         int white = res.getColor(R.color.white);
@@ -110,7 +103,7 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         for (int i = 0; i < y1_Values.length; i++) {
             entries.add(new BarEntry(i, (float) y1_Values[i]));
         }
-        dataSet = new BarDataSet(entries, "График чего-то там");
+        dataSet = new BarDataSet(entries, "Вероятность занятости k линий");
     
         // Настройки столбцов
         dataSet.setColor(red700);
@@ -121,12 +114,19 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         data.addDataSet(dataSet);
     }
     
+    final int BARS_FOR_MIN_TEXT_SIZE = 20;
+    final int BARS_FOR_MAX_TEXT_SIZE = 5;
+    
     protected void adjustTextSize() {
-        if (y1_Values.length <= 20) {
-            if (y1_Values.length >= 10) {
-                dataSet.setValueTextSize(100 / y1_Values.length);
+        float barsInWindow = y1_Values.length / chart.getScaleX();
+        
+        if (barsInWindow <= BARS_FOR_MIN_TEXT_SIZE) {
+            dataSet.setDrawValues(true);
+            
+            if (barsInWindow >= BARS_FOR_MAX_TEXT_SIZE) {
+                dataSet.setValueTextSize(100 / barsInWindow);
             } else {
-                dataSet.setValueTextSize(10);
+                dataSet.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
             }
         } else {
             dataSet.setDrawValues(false);
@@ -136,7 +136,6 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("LOG", "BarGraphFragment: onStart");
         chart.animateY(1500);
     }
     
@@ -149,5 +148,33 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
     @Override
     public void onNothingSelected() {
         P_TextView.setText("P[k]");
+    }
+    
+    @Override
+    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+        adjustTextSize();
+    }
+    
+    // Заглушки от OnChartGestureListener
+    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+    
+    }
+    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+    
+    }
+    public void onChartLongPressed(MotionEvent me) {
+    
+    }
+    public void onChartDoubleTapped(MotionEvent me) {
+    
+    }
+    public void onChartSingleTapped(MotionEvent me) {
+    
+    }
+    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+    
+    }
+    public void onChartTranslate(MotionEvent me, float dX, float dY) {
+    
     }
 }
