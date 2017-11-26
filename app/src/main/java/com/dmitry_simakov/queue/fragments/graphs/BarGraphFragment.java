@@ -28,11 +28,14 @@ import java.util.List;
 
 public class BarGraphFragment extends Fragment implements OnChartValueSelectedListener, OnChartGestureListener {
     
-    protected BarChart chart;
+    private BarChart chart;
     
-    protected double[] y1_Values;
+    private double[] P_Values;
+    private int V;
     
-    protected TextView P_TextView;
+    private TextView P_TextView;
+    BarDataSet dataSet1;
+    BarDataSet dataSet2;
     
     @Override
     public View onCreateView(
@@ -43,7 +46,8 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         // Получаем значения из активити
         Bundle bundle = getArguments();
         if (bundle != null) {
-            getBundle(bundle);
+            P_Values = bundle.getDoubleArray(Model_CalculationFragment.P_VALUES);
+            V = bundle.getInt(Model_CalculationFragment.V_VALUE);
         }
     
         // Получаем TextViews для OnChartValueSelectedListener
@@ -56,9 +60,42 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         FrameLayout frameLayout = v.findViewById(R.id.bar_graph_frame);
         frameLayout.addView(chart);
         
-        // Задаём значения гистограмме
+        // подготовим цвета
+        Resources res = getResources();
+        int white = res.getColor(R.color.white);
+        int red700 = res.getColor(R.color.red_700);
+        int grey900 = res.getColor(R.color.grey_900);
+    
         BarData data = new BarData();
-        prepareData(data);
+        
+        List<BarEntry> entries1 = new ArrayList<>();
+        for (int i = 0; i <= V; i++) {
+            entries1.add(new BarEntry(i, (float) P_Values[i]));
+        }
+        dataSet1 = new BarDataSet(entries1, "Вероятность занятости k линий");
+    
+        // Настройки столбцов
+        dataSet1.setColor(red700);
+        dataSet1.setHighLightColor(white);
+        dataSet1.setValueTextColor(grey900);
+        data.addDataSet(dataSet1);
+        
+        if (P_Values.length > V) {
+            List<BarEntry> entries2 = new ArrayList<>();
+            for (int i = V + 1; i < P_Values.length; i++) {
+                entries2.add(new BarEntry(i, (float) P_Values[i]));
+            }
+            dataSet2 = new BarDataSet(entries2, "Вероятность j ожидающих");
+    
+            // Настройки столбцов
+            dataSet2.setColor(grey900);
+            dataSet2.setHighLightColor(white);
+    
+            // Настройки значений над столбцами
+            dataSet2.setValueTextColor(grey900);
+            data.addDataSet(dataSet2);
+        }
+        
         adjustTextSize();
         data.setBarWidth(0.9f); // Ширина бара определяется X величиной
     
@@ -86,50 +123,22 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         return v;
     }
     
-    protected void getBundle(Bundle bundle) {
-        y1_Values = bundle.getDoubleArray(Model_CalculationFragment.P_VALUES);
-    }
-    
-    BarDataSet dataSet;
-    
-    protected void prepareData(BarData data) {
-        // подготовим цвета
-        Resources res = getResources();
-        int white = res.getColor(R.color.white);
-        int red700 = res.getColor(R.color.red_700);
-        int grey900 = res.getColor(R.color.grey_900);
-        
-        List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < y1_Values.length; i++) {
-            entries.add(new BarEntry(i, (float) y1_Values[i]));
-        }
-        dataSet = new BarDataSet(entries, "Вероятность занятости k линий");
-    
-        // Настройки столбцов
-        dataSet.setColor(red700);
-        dataSet.setHighLightColor(white);
-    
-        // Настройки значений над столбцами
-        dataSet.setValueTextColor(grey900);
-        data.addDataSet(dataSet);
-    }
-    
     final int BARS_FOR_MIN_TEXT_SIZE = 20;
     final int BARS_FOR_MAX_TEXT_SIZE = 5;
     
     protected void adjustTextSize() {
-        float barsInWindow = y1_Values.length / chart.getScaleX();
+        float barsInWindow = P_Values.length / chart.getScaleX();
         
         if (barsInWindow <= BARS_FOR_MIN_TEXT_SIZE) {
-            dataSet.setDrawValues(true);
+            dataSet1.setDrawValues(true);
             
             if (barsInWindow >= BARS_FOR_MAX_TEXT_SIZE) {
-                dataSet.setValueTextSize(100 / barsInWindow);
+                dataSet1.setValueTextSize(100 / barsInWindow);
             } else {
-                dataSet.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
+                dataSet1.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
             }
         } else {
-            dataSet.setDrawValues(false);
+            dataSet1.setDrawValues(false);
         }
     }
     

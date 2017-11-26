@@ -55,6 +55,7 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
     protected double[] P_Values = new double[11];
     public static final String P_VALUES = "P_VALUES";
+    public static final String V_VALUE = "V_VALUE";
     
     protected boolean wasCalculated = false;
     public static final String WAS_CALCULATED = "WAS_CALCULATED";
@@ -296,9 +297,10 @@ public class Model_CalculationFragment extends Fragment implements View.OnClickL
     
     protected void createGraphFragment() {
         FragmentManager myFragmentManager = getFragmentManager();
-        Fragment fragment = null;
+        Fragment fragment;
         Bundle args = new Bundle();
         args.putDoubleArray(P_VALUES, P_Values);
+        args.putInt(V_VALUE, model.getV());
         fragment = new BarGraphFragment();
         fragment.setArguments(args);
         myFragmentManager.beginTransaction().replace(R.id.graph_frame, fragment).commit();

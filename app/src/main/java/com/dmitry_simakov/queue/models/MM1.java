@@ -24,6 +24,8 @@ public class MM1 extends Model {
         k_Formula = R.drawable.mm1_k;
         t_Formula = R.drawable.mm1_t;
         Pk_Formula = R.drawable.mm1_pk;
+        
+        V = 1;
     }
     
     

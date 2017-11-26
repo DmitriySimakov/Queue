@@ -27,6 +27,8 @@ public class MMinf extends Model {
         k_Formula = R.drawable.mminf_k;
         t_Formula = R.drawable.mminf_t;
         Pk_Formula = R.drawable.mminf_pk;
+        
+        V = 10;
     }
     
     

@@ -20,6 +20,7 @@ public abstract class Model {
     protected double lambda;
     protected double mu;
     protected double ro = -1;
+    protected int V;
     
     protected double P[];
     protected int Pk_Formula = R.drawable.empty_image;
@@ -61,6 +62,7 @@ public abstract class Model {
     public String getT_Description() { return "Среднее время прибывания в системе"; }
     
     public double getRo() { return ro; }
+    public int getV() { return V; }
     
     public Map<String, String> getInputParameters() {
         Map<String, String> map = new HashMap<>();

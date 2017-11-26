@@ -4,8 +4,6 @@ import com.dmitry_simakov.queue.R;
 
 public abstract class Model_V extends Model {
     
-    protected int V;
-    
     protected double Pt;
     protected int Pt_Formula = R.drawable.empty_image;
     
