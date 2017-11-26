@@ -131,14 +131,18 @@ public class BarGraphFragment extends Fragment implements OnChartValueSelectedLi
         
         if (barsInWindow <= BARS_FOR_MIN_TEXT_SIZE) {
             dataSet1.setDrawValues(true);
+            dataSet2.setDrawValues(true);
             
             if (barsInWindow >= BARS_FOR_MAX_TEXT_SIZE) {
                 dataSet1.setValueTextSize(100 / barsInWindow);
+                dataSet2.setValueTextSize(100 / barsInWindow);
             } else {
                 dataSet1.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
+                dataSet2.setValueTextSize(100 / BARS_FOR_MAX_TEXT_SIZE);
             }
         } else {
             dataSet1.setDrawValues(false);
+            dataSet2.setDrawValues(false);
         }
     }
     
